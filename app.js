@@ -1544,18 +1544,53 @@ function initSettingsProfile() {
 
   const feedbackForm = document.getElementById('feedbackForm');
   if (feedbackForm) {
-    feedbackForm.addEventListener('submit', (e) => {
+    feedbackForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const sender = document.getElementById('feedbackSender').value.trim();
-      const msg = document.getElementById('feedbackMessage').value.trim();
+      const senderInput = document.getElementById('feedbackSender');
+      const msgInput = document.getElementById('feedbackMessage');
+      const submitBtn = feedbackForm.querySelector('button[type="submit"]');
+
+      const sender = senderInput.value.trim();
+      const msg = msgInput.value.trim();
       if (!sender || !msg) return;
 
-      const subject = encodeURIComponent(`Aura Website Feedback from ${sender}`);
-      const body = encodeURIComponent(`Hi Sanidi,\n\nHere is feedback regarding your Aura website from ${sender}:\n\n"${msg}"\n\nSent via Aura Dashboard Settings.`);
-      window.location.href = `mailto:abayawikkrama@gmail.com?subject=${subject}&body=${body}`;
+      const originalBtnHtml = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Sending feedback... ⏳</span>`;
 
-      alert("Thank you! Your default email app will now open to send your feedback directly to Sanidi.");
-      document.getElementById('feedbackMessage').value = "";
+      try {
+        const response = await fetch("https://formsubmit.co/ajax/abayawikkrama@gmail.com", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            name: sender,
+            message: msg,
+            _subject: `Aura Website Feedback from ${sender}`
+          })
+        });
+
+        if (response.ok) {
+          alert("Thank you! Your feedback has been sent directly to Sanidi's inbox.");
+          msgInput.value = "";
+        } else {
+          // Fallback if blocked
+          const subject = encodeURIComponent(`Aura Website Feedback from ${sender}`);
+          const body = encodeURIComponent(`Hi Sanidi,\n\nHere is feedback regarding your Aura website from ${sender}:\n\n"${msg}"`);
+          window.location.href = `mailto:abayawikkrama@gmail.com?subject=${subject}&body=${body}`;
+        }
+      } catch (err) {
+        // Fallback if offline
+        const subject = encodeURIComponent(`Aura Website Feedback from ${sender}`);
+        const body = encodeURIComponent(`Hi Sanidi,\n\nHere is feedback regarding your Aura website from ${sender}:\n\n"${msg}"`);
+        window.location.href = `mailto:abayawikkrama@gmail.com?subject=${subject}&body=${body}`;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHtml;
+        if (window.lucide) window.lucide.createIcons();
+      }
     });
   }
 }
