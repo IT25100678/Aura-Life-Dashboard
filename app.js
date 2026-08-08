@@ -128,16 +128,9 @@ function saveStateToLocalStorage() {
   localStorage.setItem('aura_dashboard_state', JSON.stringify(appState));
 }
 
-// Syncs today's live tracking state to local storage logs in real-time
+// Syncs today's live tracking state to live preview on dashboard
 function syncTodayLiveToLogs() {
-  appState.logs[todayTracking.date] = JSON.parse(JSON.stringify(todayTracking));
-  saveStateToLocalStorage();
-  
-  // Re-render history and metrics dynamically in real-time
-  renderHistoryView();
-  renderAnalyticsView();
   renderTodayOverviewPreview();
-  updateSaveStatusIndicator(true); // Keep indicating that it is fully logged
 }
 
 function loadStateFromLocalStorage() {
@@ -1702,15 +1695,19 @@ function resetData() {
   if (confirm("WARNING: Are you absolutely sure you want to clear your entire Aura history? This cannot be undone.")) {
     localStorage.removeItem('aura_dashboard_state');
     appState = {
-      profile: { username: "Aura Tracker", focus: "Productivity & Health", avatarColor: "clay" },
+      profile: { username: "Sanidi Abewickrama", focus: "Productivity & Health", avatarColor: "clay" },
       habits: [...DEFAULT_HABITS],
-      logs: {}
+      activities: [...DEFAULT_ACTIVITIES],
+      logs: {},
+      memories: {}
     };
     saveStateToLocalStorage();
     
     // Reset inputs
-    document.getElementById('dailyStatus').value = '';
-    document.getElementById('charCount').textContent = '0';
+    const dailyStatusEl = document.getElementById('dailyStatus');
+    if (dailyStatusEl) dailyStatusEl.value = '';
+    const charCountEl = document.getElementById('charCount');
+    if (charCountEl) charCountEl.textContent = '0';
     
     todayTracking = {
       date: getFormattedDate(new Date()),
@@ -1719,15 +1716,24 @@ function resetData() {
       activities: {},
       habits: {}
     };
+
+    appState.activities.forEach(act => {
+      todayTracking.activities[act.id] = 0;
+    });
+    appState.habits.forEach(h => {
+      todayTracking.habits[h] = false;
+    });
     
     // Refresh GUI
     loadTodayFromState();
     renderHabitsList();
+    renderActivitiesList();
     renderHistoryView();
     renderAnalyticsView();
+    renderGratitudeJar();
     updateNavUserDisplay();
     
-    alert("Data cleared successfully.");
+    alert("Data cleared successfully. Everything has been reset to 0.");
   }
 }
 
