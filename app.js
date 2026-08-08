@@ -844,6 +844,7 @@ function loadTodayFromState() {
     });
 
     updateSaveStatusIndicator(false);
+    renderTodayOverviewPreview();
   }
 
   // Render the activities list dynamically
@@ -1733,7 +1734,7 @@ function resetData() {
     renderGratitudeJar();
     updateNavUserDisplay();
     
-    alert("Data cleared successfully. Everything has been reset to 0.");
+    alert("Your request has been successful. Your Aura dashboard data has been reset.");
   }
 }
 
