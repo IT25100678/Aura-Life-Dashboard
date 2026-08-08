@@ -155,8 +155,18 @@ function loadStateFromLocalStorage() {
       }
       
       if (parsed.logs) appState.logs = parsed.logs;
-      if (parsed.memories) appState.memories = parsed.memories;
-      else appState.memories = {};
+      if (parsed.memories) {
+        appState.memories = parsed.memories;
+        // Automatic code-side cleanup: Purge any old sample test memories automatically on startup
+        Object.keys(appState.memories).forEach(k => {
+          const txt = appState.memories[k].text || "";
+          if (txt.includes("coding project milestone") || txt.includes("matcha with university") || txt.includes("evening walk in the park")) {
+            delete appState.memories[k];
+          }
+        });
+      } else {
+        appState.memories = {};
+      }
       
       if (parsed.activities && Array.isArray(parsed.activities) && parsed.activities.length > 0) {
         appState.activities = parsed.activities;
@@ -705,7 +715,6 @@ function renderGratitudeJar() {
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 
   if (activeMemories.length === 0) {
-    chipsContainer.innerHTML = `<p class="description" style="font-size:11px;">No memories in this 30-day cycle yet.</p>`;
     return;
   }
 
