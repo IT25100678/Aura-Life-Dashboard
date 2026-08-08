@@ -169,7 +169,7 @@ function loadStateFromLocalStorage() {
   } else {
     appState.activities = [...DEFAULT_ACTIVITIES];
     appState.habits = [...DEFAULT_HABITS];
-    generateMockHistory();
+    appState.logs = {};
   }
 
   // Set the theme color on startup
@@ -897,6 +897,12 @@ document.getElementById('logDayBtn').addEventListener('click', () => {
   renderAnalyticsView();
   renderHistoryView();
   
+  // Programmatically click today's day element so history detail displays instantly
+  setTimeout(() => {
+    const todayDayEl = document.querySelector(`.day[data-date="${todayTracking.date}"]`);
+    if (todayDayEl) todayDayEl.click();
+  }, 50);
+
   // Re-run icons
   lucide.createIcons();
 });
