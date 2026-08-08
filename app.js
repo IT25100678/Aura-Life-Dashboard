@@ -619,37 +619,17 @@ function initGratitudeJar() {
     appState.memories = {};
   }
 
-  // Seed sample memories if empty so jar is visually full and cute on first load
-  if (Object.keys(appState.memories).length === 0) {
-    const today = new Date();
-    const d1 = new Date(today); d1.setDate(today.getDate() - 3);
-    const d2 = new Date(today); d2.setDate(today.getDate() - 2);
-    const d3 = new Date(today); d3.setDate(today.getDate() - 1);
-
-    appState.memories[getFormattedDate(d1)] = {
-      date: getFormattedDate(d1),
-      text: "Finished coding project milestone ✨",
-      color: "#ffb5a7"
-    };
-    appState.memories[getFormattedDate(d2)] = {
-      date: getFormattedDate(d2),
-      text: "Coffee & matcha with university friends ☕",
-      color: "#a9c6e2"
-    };
-    appState.memories[getFormattedDate(d3)] = {
-      date: getFormattedDate(d3),
-      text: "Relaxing evening walk in the park 🌿",
-      color: "#a3b19b"
-    };
-  }
-
   const addBtn = document.getElementById('addGratitudeBtn');
   const inputEl = document.getElementById('gratitudeInput');
 
   if (addBtn && inputEl) {
-    addBtn.addEventListener('click', () => saveGratitudeEntry());
+    const handleSave = (e) => {
+      if (e) e.preventDefault();
+      saveGratitudeEntry();
+    };
+    addBtn.addEventListener('click', handleSave);
     inputEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') saveGratitudeEntry();
+      if (e.key === 'Enter') handleSave(e);
     });
   }
 
@@ -682,7 +662,10 @@ function saveGratitudeEntry() {
   };
 
   saveStateToLocalStorage();
-  if (inputEl) inputEl.value = "";
+  if (inputEl) {
+    inputEl.value = "";
+    inputEl.blur(); // Closes iPhone 16 software keyboard smoothly
+  }
   renderGratitudeJar();
   
   if (window.lucide) window.lucide.createIcons();
