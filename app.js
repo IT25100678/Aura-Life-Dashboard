@@ -1202,16 +1202,8 @@ function renderAnalyticsView() {
   const dates = Object.keys(allLogs);
   const totalDays = dates.length;
   
-  if (totalDays === 0) {
-    document.getElementById('metric-days').textContent = "0";
-    document.getElementById('metric-mood').textContent = "N/A";
-    document.getElementById('metric-streak').textContent = "0 days";
-    document.getElementById('metric-habits').textContent = "0%";
-    return;
-  }
-  
   // Calculate Avg Mood
-  const avgMood = (dates.reduce((sum, d) => sum + allLogs[d].mood, 0) / totalDays).toFixed(1);
+  const avgMood = totalDays > 0 ? (dates.reduce((sum, d) => sum + allLogs[d].mood, 0) / totalDays).toFixed(1) : "0.0";
   document.getElementById('metric-days').textContent = totalDays;
   document.getElementById('metric-mood').textContent = `${avgMood} / 5.0`;
 
@@ -1234,10 +1226,10 @@ function renderAnalyticsView() {
   const habitPct = totalHabitOpportunities > 0 ? Math.round((totalHabitsDone / totalHabitOpportunities) * 100) : 0;
   document.getElementById('metric-habits').textContent = `${habitPct}%`;
 
-  // Render Mood Breakdown Bar Chart
+  // Render Mood Breakdown Bar Chart (Always renders all 5 moods!)
   renderMoodBreakdown(allLogs, totalDays);
   
-  // Render Habits Analytics Lists
+  // Render Habits Analytics Lists (Always renders active habits!)
   renderHabitsMasterAnalytics(allLogs);
   
   // Render Polar SVG Chart
@@ -1305,17 +1297,12 @@ function renderHabitsMasterAnalytics(allLogs) {
   container.innerHTML = '';
   
   if (appState.habits.length === 0) {
-    container.innerHTML = `<p class="description">No habits checked yet.</p>`;
+    container.innerHTML = `<p class="description">No habits defined yet.</p>`;
     return;
   }
   
   const dates = Object.keys(allLogs);
   const totalLoggedDays = dates.length;
-  
-  if (totalLoggedDays === 0) {
-    container.innerHTML = `<p class="description">No logs recorded yet.</p>`;
-    return;
-  }
   
   appState.habits.forEach(habit => {
     let checkedDays = 0;
