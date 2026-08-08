@@ -231,7 +231,8 @@ h1, h2, h3, h4 {
   margin-left: var(--sidebar-width);
   padding: 24px 32px;
   flex-grow: 1;
-  max-width: calc(100vw - var(--sidebar-width));
+  max-width: 1350px;
+  box-sizing: border-box;
 }
 
 .top-header {
