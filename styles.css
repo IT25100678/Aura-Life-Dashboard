@@ -2125,11 +2125,39 @@ html[data-theme="dark"] .reflection-hover-box,
   color: #F5EBE6 !important;
 }
 
-html[data-theme="dark"] .heatmap-day,
-[data-theme="dark"] .heatmap-day {
+html[data-theme="dark"] .heatmap-day:not(.logged-day-highlight),
+[data-theme="dark"] .heatmap-day:not(.logged-day-highlight) {
   background: rgba(48, 42, 39, 0.9) !important;
   border: 1px solid rgba(110, 95, 88, 0.4) !important;
   color: #F5EBE6 !important;
+}
+
+/* 🗓️ Logged Days in Calendar Grid: Dynamically Highlighted in User's Selected Theme Color! (LIGHT & DARK MODE) */
+.heatmap-day.logged-day-highlight,
+html[data-theme="dark"] .heatmap-day.logged-day-highlight,
+body[data-theme="dark"] .heatmap-day.logged-day-highlight,
+[data-theme="dark"] .heatmap-day.logged-day-highlight {
+  background: var(--color-accent-dark) !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  border: 1.5px solid var(--color-accent) !important;
+  box-shadow: 0 4px 12px var(--color-accent-glow) !important;
+}
+
+.heatmap-day.logged-day-highlight:hover,
+html[data-theme="dark"] .heatmap-day.logged-day-highlight:hover,
+[data-theme="dark"] .heatmap-day.logged-day-highlight:hover {
+  transform: scale(1.18);
+  background: var(--color-accent) !important;
+  box-shadow: 0 6px 16px var(--color-accent-glow) !important;
+}
+
+/* Today's Date Block Indicator (e.g. 14th) */
+.heatmap-day.today-day-block,
+html[data-theme="dark"] .heatmap-day.today-day-block,
+[data-theme="dark"] .heatmap-day.today-day-block {
+  border: 2px solid var(--color-accent-dark) !important;
+  font-weight: 800 !important;
 }
 
 /* 8. Range Sliders & Checkboxes in Dark Mode */
