@@ -1929,6 +1929,112 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
   animation: stickySlideDown 0.3s ease;
 }
 
+/* -------------------------------------------------------------
+   COZY MIDNIGHT DARK MODE THEME 🌙
+   ------------------------------------------------------------- */
+[data-theme="dark"] {
+  --bg-gradient: linear-gradient(135deg, #1C1917 0%, #141210 100%);
+  --bg-card: rgba(34, 30, 28, 0.88);
+  --bg-sidebar: rgba(28, 25, 23, 0.92);
+  --bg-element: rgba(48, 42, 39, 0.9);
+  --text-dark: #F5EBE6;
+  --text-muted: #B8A9A4;
+  --border-color: rgba(110, 95, 88, 0.45);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] body {
+  background-color: #141210 !important;
+  color: #F5EBE6 !important;
+}
+
+[data-theme="dark"] .glass-card {
+  background: rgba(34, 30, 28, 0.88) !important;
+  border-color: rgba(110, 95, 88, 0.45) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .sidebar-nav {
+  background: rgba(28, 25, 23, 0.92) !important;
+  border-color: rgba(110, 95, 88, 0.45) !important;
+}
+
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: rgba(48, 42, 39, 0.9) !important;
+  color: #F5EBE6 !important;
+  border-color: rgba(110, 95, 88, 0.5) !important;
+}
+
+[data-theme="dark"] .spotlight-task-item {
+  background: rgba(48, 42, 39, 0.9) !important;
+  border-color: rgba(110, 95, 88, 0.45) !important;
+  color: #F5EBE6 !important;
+}
+
+[data-theme="dark"] .spec-card {
+  background: rgba(48, 42, 39, 0.8) !important;
+  border-color: rgba(110, 95, 88, 0.45) !important;
+}
+
+/* Header theme toggle button */
+.header-theme-toggle {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: 50px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-accent-dark);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.header-theme-toggle:hover {
+  transform: scale(1.08);
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .theme-icon-sun { display: block; }
+[data-theme="dark"] .theme-icon-moon { display: none; }
+:root:not([data-theme="dark"]) .theme-icon-sun { display: none; }
+:root:not([data-theme="dark"]) .theme-icon-moon { display: block; }
+
+/* Settings theme mode toggle group */
+.theme-mode-toggle-group {
+  display: flex;
+  gap: 8px;
+}
+
+.theme-mode-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-element);
+  color: var(--text-dark);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.theme-mode-btn.active {
+  background: var(--color-accent-glow);
+  border-color: var(--color-accent);
+  color: var(--color-accent-dark);
+}
+
 .floating-sticky-note.minimized .floating-card-body {
   display: none !important;
 }

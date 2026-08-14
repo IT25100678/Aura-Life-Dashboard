@@ -163,8 +163,10 @@ function loadStateFromLocalStorage() {
     appState.logs = {};
   }
 
-  // Set the theme color on startup
+  // Set the theme color and Light/Dark mode on startup
   applyThemeColor(appState.profile.avatarColor || 'clay');
+  if (!appState.themeMode) appState.themeMode = 'light';
+  setThemeMode(appState.themeMode);
 }
 
 // Generates some mock history data to populate graphs and calendar grids
@@ -1358,6 +1360,15 @@ function initSettingsProfile() {
   });
   
   updateAvatarColorPreview(appState.profile.avatarColor);
+
+  // Handle Light / Dark Theme Mode choices
+  const lightBtn = document.getElementById('lightModeBtn');
+  const darkBtn = document.getElementById('darkModeBtn');
+  const headerThemeBtn = document.getElementById('headerThemeToggleBtn');
+
+  if (lightBtn) lightBtn.addEventListener('click', () => setThemeMode('light'));
+  if (darkBtn) darkBtn.addEventListener('click', () => setThemeMode('dark'));
+  if (headerThemeBtn) headerThemeBtn.addEventListener('click', toggleThemeMode);
   
   saveProfileBtn.addEventListener('click', () => {
     appState.profile.username = usernameInput.value.trim() || "Guest Tracker";
@@ -1505,6 +1516,32 @@ function applyThemeColor(colorName) {
   root.style.setProperty('--color-accent-secondary', accentSecondary);
   root.style.setProperty('--color-accent-dark', accentDark);
   root.style.setProperty('--border-focus', accent);
+}
+
+function setThemeMode(mode) {
+  const root = document.documentElement;
+  appState.themeMode = mode || 'light';
+  root.setAttribute('data-theme', appState.themeMode);
+
+  // Update Settings buttons state
+  const lightBtn = document.getElementById('lightModeBtn');
+  const darkBtn = document.getElementById('darkModeBtn');
+  if (lightBtn && darkBtn) {
+    if (appState.themeMode === 'dark') {
+      darkBtn.classList.add('active');
+      lightBtn.classList.remove('active');
+    } else {
+      lightBtn.classList.add('active');
+      darkBtn.classList.remove('active');
+    }
+  }
+
+  saveStateToLocalStorage();
+}
+
+function toggleThemeMode() {
+  const currentMode = appState.themeMode === 'dark' ? 'light' : 'dark';
+  setThemeMode(currentMode);
 }
 
 function updateNavUserDisplay() {
