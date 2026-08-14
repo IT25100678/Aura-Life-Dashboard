@@ -1332,17 +1332,14 @@ function initSettingsProfile() {
   const usernameInput = document.getElementById('usernameInput');
   const aspirationInput = document.getElementById('aspirationInput');
   const saveProfileBtn = document.getElementById('saveProfileBtn');
-  const avatarPreview = document.getElementById('avatarPreview');
-  const navAvatar = document.getElementById('navAvatar');
-  const navUsername = document.getElementById('navUsername');
   
-  if (!usernameInput || !aspirationInput || !saveProfileBtn) return;
+  if (!usernameInput || !saveProfileBtn) return;
   
   // Set initial settings inputs values
-  usernameInput.value = appState.profile.username;
-  aspirationInput.value = appState.profile.focus;
+  usernameInput.value = appState.profile.username || "Guest Tracker";
+  if (aspirationInput) aspirationInput.value = appState.profile.focus || "Self-Improvement";
   
-  // Handle avatar color choices
+  // Handle avatar color choices (LIVE PREVIEW & APPLY)
   const colorButtons = document.querySelectorAll('.avatar-color-btn');
   colorButtons.forEach(btn => {
     const color = btn.getAttribute('data-color');
@@ -1356,10 +1353,12 @@ function initSettingsProfile() {
       btn.classList.add('active');
       appState.profile.avatarColor = color;
       updateAvatarColorPreview(color);
+      applyThemeColor(color);
+      saveStateToLocalStorage();
     });
   });
   
-  updateAvatarColorPreview(appState.profile.avatarColor);
+  updateAvatarColorPreview(appState.profile.avatarColor || 'clay');
 
   // Handle Light / Dark Theme Mode choices
   const lightBtn = document.getElementById('lightModeBtn');
@@ -1372,7 +1371,7 @@ function initSettingsProfile() {
   
   saveProfileBtn.addEventListener('click', () => {
     appState.profile.username = usernameInput.value.trim() || "Guest Tracker";
-    appState.profile.focus = aspirationInput.value.trim() || "Self-Improvement";
+    if (aspirationInput) appState.profile.focus = aspirationInput.value.trim() || "Self-Improvement";
     
     saveStateToLocalStorage();
     updateNavUserDisplay();
