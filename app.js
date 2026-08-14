@@ -1678,22 +1678,6 @@ function initPriorityStickyNote() {
   const priorityInput = document.getElementById('priorityInput');
   const addBtn = document.getElementById('addPriorityBtn');
 
-  const toggleBtn = document.getElementById('toggleStickyBtn');
-  const minimizeBtn = document.getElementById('minimizeStickyBtn');
-  const floatingWidget = document.getElementById('floatingStickyNote');
-
-  if (toggleBtn && floatingWidget) {
-    toggleBtn.addEventListener('click', () => {
-      floatingWidget.classList.toggle('minimized');
-    });
-  }
-
-  if (minimizeBtn && floatingWidget) {
-    minimizeBtn.addEventListener('click', () => {
-      floatingWidget.classList.add('minimized');
-    });
-  }
-
   if (addBtn && priorityInput) {
     const handleAdd = () => {
       const text = priorityInput.value.trim();
@@ -1708,7 +1692,6 @@ function initPriorityStickyNote() {
       appState.pinnedPriorities.push(newTask);
       saveStateToLocalStorage();
       priorityInput.value = '';
-      if (floatingWidget) floatingWidget.classList.remove('minimized');
       renderPriorityTasks();
     };
 
@@ -1723,7 +1706,6 @@ function initPriorityStickyNote() {
 
 function renderPriorityTasks() {
   const container = document.getElementById('stickyTasksContainer');
-  const countBadge = document.getElementById('priorityCountBadge');
   if (!container) return;
 
   container.innerHTML = '';
@@ -1734,54 +1716,37 @@ function renderPriorityTasks() {
 
   const tasks = appState.pinnedPriorities;
 
-  if (countBadge) {
-    countBadge.textContent = `${tasks.length}`;
-  }
-
   if (tasks.length === 0) {
-    container.innerHTML = `<p class="description" style="font-size: 11.5px; margin: 6px 0; text-align: center;">No pinned priorities right now. Add one above! ✨</p>`;
+    container.innerHTML = `<span class="description" style="font-size: 11px; color: var(--text-muted);">No active focus</span>`;
     return;
   }
 
   tasks.forEach(task => {
-    const row = document.createElement('div');
-    row.className = 'sticky-task-item';
-    row.dataset.id = task.id;
+    const chip = document.createElement('div');
+    chip.className = 'priority-chip';
+    chip.dataset.id = task.id;
 
-    row.innerHTML = `
-      <label class="sticky-task-label">
-        <input type="checkbox" class="task-checkbox">
-        <span class="sticky-checkbox-custom"></span>
-        <span class="task-text">${task.text}</span>
-      </label>
-      <button class="task-delete-btn" title="Delete task">&times;</button>
+    chip.innerHTML = `
+      <span class="priority-chip-check" title="Mark Done">✓</span>
+      <span>${task.text}</span>
+      <span class="priority-chip-del" title="Delete Focus">&times;</span>
     `;
 
-    const checkbox = row.querySelector('.task-checkbox');
-    const label = row.querySelector('.sticky-task-label');
-    const deleteBtn = row.querySelector('.task-delete-btn');
+    const checkBtn = chip.querySelector('.priority-chip-check');
+    const delBtn = chip.querySelector('.priority-chip-del');
 
-    // Auto-delete on check completion
-    checkbox.addEventListener('change', () => {
-      if (checkbox.checked) {
-        label.classList.add('completed');
-        row.classList.add('fade-out');
-
-        setTimeout(() => {
-          deletePriorityTask(task.id);
-        }, 500);
-      }
-    });
-
-    // Manual delete button
-    deleteBtn.addEventListener('click', () => {
-      row.classList.add('fade-out');
+    checkBtn.addEventListener('click', () => {
+      chip.classList.add('completed');
       setTimeout(() => {
         deletePriorityTask(task.id);
-      }, 250);
+      }, 400);
     });
 
-    container.appendChild(row);
+    delBtn.addEventListener('click', () => {
+      deletePriorityTask(task.id);
+    });
+
+    container.appendChild(chip);
   });
 }
 
