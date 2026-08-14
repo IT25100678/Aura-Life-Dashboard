@@ -1897,43 +1897,75 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
   color: #FFFFFF;
 }
 
-.sticky-done-checkbox {
-  display: inline-flex;
-  align-items: center;
+.sticky-tasks-list {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-  cursor: pointer;
-  user-select: none;
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--text-dark);
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 2px;
   margin-top: 4px;
 }
 
-.sticky-done-checkbox input[type="checkbox"] {
+.sticky-task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(229, 213, 164, 0.8);
+  border-radius: 8px;
+  padding: 8px 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(188, 170, 154, 0.1);
+}
+
+.sticky-task-item:hover {
+  background: #FFFFFF;
+  border-color: #E07A5F;
+}
+
+.sticky-task-item.fade-out {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.sticky-task-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex-grow: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.sticky-task-label input[type="checkbox"] {
   display: none;
 }
 
-.sticky-checkbox-custom {
-  width: 16px;
-  height: 16px;
-  border: 1.8px solid var(--border-color);
+.sticky-task-label.completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-delete-btn {
+  background: none;
+  border: none;
+  color: #C62828;
+  opacity: 0.4;
+  cursor: pointer;
+  padding: 2px 4px;
   border-radius: 4px;
-  background: #FFFFFF;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
 }
 
-.sticky-done-checkbox input[type="checkbox"]:checked + .sticky-checkbox-custom {
-  background: #A3B19B;
-  border-color: #52604D;
-}
-
-.sticky-done-checkbox input[type="checkbox"]:checked + .sticky-checkbox-custom::after {
-  content: '✓';
-  color: #FFFFFF;
-  font-size: 11px;
-  font-weight: bold;
+.task-delete-btn:hover {
+  opacity: 1;
+  background: rgba(198, 40, 40, 0.1);
 }
 

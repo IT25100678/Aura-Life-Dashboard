@@ -1736,7 +1736,8 @@ function resetData() {
       habits: [...DEFAULT_HABITS],
       activities: [...DEFAULT_ACTIVITIES],
       logs: {},
-      memories: {}
+      memories: {},
+      pinnedPriorities: []
     };
     saveStateToLocalStorage();
     
@@ -1768,6 +1769,7 @@ function resetData() {
     renderHistoryView();
     renderAnalyticsView();
     renderGratitudeJar();
+    renderPriorityTasks();
     updateNavUserDisplay();
     
     alert("Your request has been successful. Your Aura dashboard data has been reset.");
@@ -1832,65 +1834,109 @@ function getSeededReflection(dateStr, missedGym, missedWater) {
   }
 }
 
-// 📌 COZY PASTEL STICKY NOTE LOGIC (DAILY PRIORITY)
-// -------------------------------------------------
+// 📌 COZY PASTEL STICKY NOTE LOGIC (MULTI-TASK PINNED PRIORITIES)
+// ----------------------------------------------------------------
 function initPriorityStickyNote() {
+  if (!appState.pinnedPriorities) {
+    appState.pinnedPriorities = [];
+  }
+
   const priorityInput = document.getElementById('priorityInput');
-  const priorityCheck = document.getElementById('priorityCheck');
-  const savePriorityBtn = document.getElementById('savePriorityBtn');
+  const addBtn = document.getElementById('addPriorityBtn');
 
-  if (!priorityInput || !priorityCheck) return;
+  if (addBtn && priorityInput) {
+    const handleAdd = () => {
+      const text = priorityInput.value.trim();
+      if (!text) return;
 
-  // Load existing priority for today if available
-  const existingPriority = (todayTracking && todayTracking.priority) || { text: "", isDone: false };
-  priorityInput.value = existingPriority.text || "";
-  priorityCheck.checked = !!existingPriority.isDone;
-  updatePriorityUI(existingPriority.text, existingPriority.isDone);
+      const newTask = {
+        id: Date.now().toString(),
+        text: text,
+        createdDate: getFormattedDate(new Date())
+      };
 
-  const savePriority = () => {
-    const text = priorityInput.value.trim();
-    const isDone = priorityCheck.checked;
-    todayTracking.priority = { text, isDone };
-    
-    // Save to permanent state
-    if (appState.logs[todayTracking.date]) {
-      appState.logs[todayTracking.date].priority = { text, isDone };
-    }
-    saveStateToLocalStorage();
-    updatePriorityUI(text, isDone);
-  };
+      appState.pinnedPriorities.push(newTask);
+      saveStateToLocalStorage();
+      priorityInput.value = '';
+      renderPriorityTasks();
+    };
 
-  if (savePriorityBtn) savePriorityBtn.addEventListener('click', savePriority);
-  priorityInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') savePriority();
-  });
-  priorityCheck.addEventListener('change', savePriority);
+    addBtn.addEventListener('click', handleAdd);
+    priorityInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleAdd();
+    });
+  }
+
+  renderPriorityTasks();
 }
 
-function updatePriorityUI(text, isDone) {
-  const priorityInput = document.getElementById('priorityInput');
-  const badge = document.getElementById('priorityStatusBadge');
-  const checkText = document.getElementById('priorityCheckText');
+function renderPriorityTasks() {
+  const container = document.getElementById('stickyTasksContainer');
+  const countBadge = document.getElementById('priorityCountBadge');
+  if (!container) return;
 
-  if (priorityInput) {
-    if (isDone) {
-      priorityInput.classList.add('done-text');
-    } else {
-      priorityInput.classList.remove('done-text');
-    }
+  container.innerHTML = '';
+
+  if (!appState.pinnedPriorities) {
+    appState.pinnedPriorities = [];
   }
 
-  if (badge) {
-    if (isDone) {
-      badge.textContent = "Done! 🎉";
-      badge.classList.add('done');
-    } else {
-      badge.textContent = text ? "Pinned 📌" : "Pinned";
-      badge.classList.remove('done');
-    }
+  const tasks = appState.pinnedPriorities;
+
+  if (countBadge) {
+    countBadge.textContent = `${tasks.length} Pinned`;
   }
 
-  if (checkText) {
-    checkText.textContent = isDone ? "Priority Completed! 🎉" : "Mark Priority as Done ✨";
+  if (tasks.length === 0) {
+    container.innerHTML = `<p class="description" style="font-size: 11.5px; margin: 6px 0; text-align: center;">No pinned priorities right now. Add one above! ✨</p>`;
+    return;
   }
+
+  tasks.forEach(task => {
+    const row = document.createElement('div');
+    row.className = 'sticky-task-item';
+    row.dataset.id = task.id;
+
+    row.innerHTML = `
+      <label class="sticky-task-label">
+        <input type="checkbox" class="task-checkbox">
+        <span class="sticky-checkbox-custom"></span>
+        <span class="task-text">${task.text}</span>
+      </label>
+      <button class="task-delete-btn" title="Delete task">&times;</button>
+    `;
+
+    const checkbox = row.querySelector('.task-checkbox');
+    const label = row.querySelector('.sticky-task-label');
+    const deleteBtn = row.querySelector('.task-delete-btn');
+
+    // Auto-delete on check completion
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
+        label.classList.add('completed');
+        row.classList.add('fade-out');
+
+        setTimeout(() => {
+          deletePriorityTask(task.id);
+        }, 500);
+      }
+    });
+
+    // Manual delete button
+    deleteBtn.addEventListener('click', () => {
+      row.classList.add('fade-out');
+      setTimeout(() => {
+        deletePriorityTask(task.id);
+      }, 250);
+    });
+
+    container.appendChild(row);
+  });
+}
+
+function deletePriorityTask(id) {
+  if (!appState.pinnedPriorities) return;
+  appState.pinnedPriorities = appState.pinnedPriorities.filter(t => t.id !== id);
+  saveStateToLocalStorage();
+  renderPriorityTasks();
 }

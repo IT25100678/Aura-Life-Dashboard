@@ -15,7 +15,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="stylesheet" href="styles.css?v=30">
 </head>
 <body>
   <div class="app-container">
@@ -295,7 +295,7 @@
               </button>
             </div> <!-- Closes Save Status Card -->
 
-            <!-- 📌 Cozy Pastel Sticky Note (Daily Priority Card) -->
+            <!-- 📌 Cozy Pastel Sticky Note (Multi-Task Pinned Priorities Card) -->
             <div class="glass-card sticky-note-card">
               <!-- Tiny Pushpin Sticker -->
               <div class="sticky-pin-container">
@@ -310,24 +310,24 @@
               <div class="sticky-note-header">
                 <div class="card-header" style="margin-bottom: 0;">
                   <i data-lucide="pin" class="header-icon" style="color: #E07A5F;"></i>
-                  <h2>Today's #1 Priority</h2>
+                  <h2>Pinned Priorities</h2>
                 </div>
-                <span class="sticky-status-badge" id="priorityStatusBadge">Pinned</span>
+                <span class="sticky-status-badge" id="priorityCountBadge">0 Pinned</span>
               </div>
 
               <div class="sticky-note-body flex-col-gap margin-top-xs">
+                <!-- Add priority input -->
                 <div class="sticky-input-wrapper">
-                  <input type="text" id="priorityInput" placeholder="e.g. Submit Math Assignment by 5 PM! ✨" maxlength="50" class="sticky-priority-input">
-                  <button id="savePriorityBtn" class="sticky-save-btn" title="Save Priority">
-                    <i data-lucide="check"></i>
+                  <input type="text" id="priorityInput" placeholder="Add priority task (e.g., Submit Assignment)..." maxlength="50" class="sticky-priority-input">
+                  <button id="addPriorityBtn" class="sticky-save-btn" title="Pin Task">
+                    <i data-lucide="plus"></i>
                   </button>
                 </div>
 
-                <label class="sticky-done-checkbox">
-                  <input type="checkbox" id="priorityCheck">
-                  <span class="sticky-checkbox-custom"></span>
-                  <span class="sticky-checkbox-label" id="priorityCheckText">Mark Priority as Done ✨</span>
-                </label>
+                <!-- Dynamic list of pinned priority tasks -->
+                <div class="sticky-tasks-list" id="stickyTasksContainer">
+                  <!-- Pinned tasks rendered by JS -->
+                </div>
               </div>
             </div>
 
@@ -592,6 +592,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=29"></script>
+  <script src="app.js?v=30"></script>
 </body>
 </html>
