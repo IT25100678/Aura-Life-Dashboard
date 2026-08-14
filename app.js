@@ -1716,7 +1716,9 @@ function renderPriorityTasks() {
     appState.pinnedPriorities = [];
   }
 
-  const tasks = appState.pinnedPriorities;
+  // Filter tasks for today's date so they refresh day by day
+  const todayKey = todayTracking.date || getFormattedDate(new Date());
+  const tasks = appState.pinnedPriorities.filter(t => t.createdDate === todayKey);
 
   if (tasks.length === 0) {
     container.innerHTML = `<p class="description" style="font-size: 11px; margin: 2px 0; text-align: center; color: var(--text-muted);">Plant your focus priorities to bloom your garden! 🌱</p>`;
@@ -1762,7 +1764,7 @@ function renderPriorityTasks() {
       gardenContainer.appendChild(flowerDiv);
     }
 
-    // 2. Render Priority Task Item
+    // 2. Render Priority Task Item (KEPT VISIBLE for the day)
     const item = document.createElement('div');
     item.className = `spotlight-task-item ${task.isDone ? 'completed' : ''}`;
     item.dataset.id = task.id;
@@ -1773,7 +1775,7 @@ function renderPriorityTasks() {
         <span class="bloom-text">${task.text}</span>
       </div>
       <div style="display: flex; align-items: center; gap: 4px;">
-        <button class="bloom-action-btn" title="Bloom Flower">${task.isDone ? '🌸 Bloomed' : '🌸 Bloom'}</button>
+        <button class="bloom-action-btn" title="Toggle Bloom">${task.isDone ? '🌸 Bloomed' : '🌸 Bloom'}</button>
         <button class="spotlight-del-btn" title="Delete Task">&times;</button>
       </div>
     `;
@@ -1784,14 +1786,7 @@ function renderPriorityTasks() {
     bloomBtn.addEventListener('click', () => {
       task.isDone = !task.isDone;
       saveStateToLocalStorage();
-      if (task.isDone) {
-        item.classList.add('completed');
-        setTimeout(() => {
-          deletePriorityTask(task.id);
-        }, 600);
-      } else {
-        renderPriorityTasks();
-      }
+      renderPriorityTasks(); // Refresh garden & list immediately WITHOUT deleting task!
     });
 
     delBtn.addEventListener('click', () => {
