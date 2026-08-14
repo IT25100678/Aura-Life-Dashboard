@@ -892,15 +892,13 @@ function renderHistoryView() {
         dayEl.classList.add(`mood-${dayLog.mood}`);
         dayEl.classList.add('logged-day-highlight');
         dayEl.title = `Logged Entry for ${dayStr}: Mood Rating ${dayLog.mood}/5`;
-      }
-        
+
         dayEl.addEventListener('click', () => {
           const detailsPane = accBody.querySelector(`#details-${safeMonthId}`);
           const reflectionBox = accBody.querySelector(`#reflection-${safeMonthId}`);
           
           const moodTexts = ["", "Stressed", "Low", "Neutral", "Calm", "Energetic"];
           const moodSvg = moodSVGs[dayLog.mood] || '';
-          const checkedHabits = dayLog.habits ? Object.keys(dayLog.habits).filter(h => dayLog.habits[h] === true) : [];
           
           // Render details inside the right panel
           detailsPane.innerHTML = `
@@ -1010,6 +1008,18 @@ function renderHistoryView() {
         });
       } else {
         dayEl.title = `No data recorded for day ${day}`;
+        dayEl.addEventListener('click', () => {
+          const detailsPane = accBody.querySelector(`#details-${safeMonthId}`);
+          if (detailsPane) {
+            detailsPane.innerHTML = `
+              <div class="empty-detail-state">
+                <i data-lucide="calendar" style="width: 32px; height: 32px; color: var(--text-muted); margin-bottom: 8px;"></i>
+                <p style="font-size: 13px; color: var(--text-muted); font-weight: 600;">No routine entry logged for ${getReadableDate(dayStr)}.</p>
+              </div>
+            `;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
       }
       
       heatmapGrid.appendChild(dayEl);
