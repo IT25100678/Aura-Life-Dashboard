@@ -1717,26 +1717,31 @@ function renderPriorityTasks() {
   const tasks = appState.pinnedPriorities;
 
   if (tasks.length === 0) {
-    container.innerHTML = `<span class="description" style="font-size: 11px; color: var(--text-muted);">No active focus</span>`;
+    container.innerHTML = `<p class="description" style="font-size: 11.5px; margin: 4px 0; text-align: center; color: var(--text-muted);">Your focus spotlight is clear today! Add a task above. 🎯</p>`;
     return;
   }
 
   tasks.forEach(task => {
-    const chip = document.createElement('div');
-    chip.className = 'priority-chip';
-    chip.dataset.id = task.id;
+    const item = document.createElement('div');
+    item.className = 'spotlight-task-item';
+    item.dataset.id = task.id;
 
-    chip.innerHTML = `
-      <span class="priority-chip-check" title="Mark Done">✓</span>
-      <span>${task.text}</span>
-      <span class="priority-chip-del" title="Delete Focus">&times;</span>
+    item.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 8px; flex-grow: 1;">
+        <i data-lucide="target" style="width: 14px; height: 14px; color: #E07A5F; flex-shrink: 0;"></i>
+        <span class="spotlight-text">${task.text}</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button class="spotlight-done-btn" title="Complete Focus">✓ Done</button>
+        <button class="spotlight-del-btn" title="Delete Task">&times;</button>
+      </div>
     `;
 
-    const checkBtn = chip.querySelector('.priority-chip-check');
-    const delBtn = chip.querySelector('.priority-chip-del');
+    const doneBtn = item.querySelector('.spotlight-done-btn');
+    const delBtn = item.querySelector('.spotlight-del-btn');
 
-    checkBtn.addEventListener('click', () => {
-      chip.classList.add('completed');
+    doneBtn.addEventListener('click', () => {
+      item.classList.add('completed');
       setTimeout(() => {
         deletePriorityTask(task.id);
       }, 400);
@@ -1746,8 +1751,10 @@ function renderPriorityTasks() {
       deletePriorityTask(task.id);
     });
 
-    container.appendChild(chip);
+    container.appendChild(item);
   });
+
+  if (window.lucide) window.lucide.createIcons();
 }
 
 function deletePriorityTask(id) {

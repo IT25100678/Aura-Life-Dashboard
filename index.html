@@ -15,7 +15,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css?v=33">
+  <link rel="stylesheet" href="styles.css?v=34">
 </head>
 <body>
   <div class="app-container">
@@ -70,30 +70,6 @@
           <p class="subtitle" id="currentDateString">Today is loading...</p>
         </div>
 
-        <!-- 📌 Sleek Top Header Priority Focus Bar -->
-        <div class="header-priority-bar" id="headerPriorityBar">
-          <div class="priority-bar-label">
-            <svg width="18" height="18" viewBox="0 0 24 24" class="sticky-pushpin-svg">
-              <path d="M12 2L15 8H9L12 2Z" fill="#E07A5F" stroke="#4A3E3D" stroke-width="1.5"/>
-              <circle cx="12" cy="9" r="4" fill="#FFCAD4" stroke="#4A3E3D" stroke-width="1.8"/>
-              <line x1="12" y1="13" x2="12" y2="21" stroke="#4A3E3D" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="10" cy="8" r="1" fill="#FFFFFF"/>
-            </svg>
-            <span class="priority-title-text">Focus:</span>
-          </div>
-
-          <div class="header-priority-input-wrapper">
-            <input type="text" id="priorityInput" placeholder="Type today's #1 focus..." maxlength="45" class="header-priority-input">
-            <button id="addPriorityBtn" class="header-priority-add-btn" title="Pin Priority Focus">
-              <i data-lucide="plus"></i>
-            </button>
-          </div>
-
-          <div class="header-priority-chips" id="stickyTasksContainer">
-            <!-- Priority chips rendered by JS -->
-          </div>
-        </div>
-
         <div class="header-right">
           <div class="quote-card">
             <i data-lucide="quote" class="quote-icon"></i>
@@ -109,6 +85,26 @@
           <!-- Left Column: Daily Inputs -->
           <div class="dashboard-column flex-col-gap">
             
+            <!-- 🎯 Daily Focus Spotlight Card -->
+            <div class="glass-card focus-spotlight-card">
+              <div class="card-header">
+                <i data-lucide="target" class="header-icon" style="color: #E07A5F;"></i>
+                <h2>Daily Focus Spotlight</h2>
+              </div>
+              <div class="card-body flex-col-gap">
+                <div class="spotlight-input-wrapper">
+                  <input type="text" id="priorityInput" placeholder="Add focus priority (e.g. Submit Math Assignment)..." maxlength="50" class="spotlight-priority-input">
+                  <button id="addPriorityBtn" class="spotlight-add-btn" title="Add Focus Task">
+                    <i data-lucide="plus"></i>
+                  </button>
+                </div>
+
+                <div class="spotlight-tasks-list" id="stickyTasksContainer">
+                  <!-- Focus tasks rendered dynamically by JS -->
+                </div>
+              </div>
+            </div>
+
             <!-- Daily Mood & Status Card -->
             <div class="glass-card aura-card-glow" id="statusCard">
               <div class="card-header">
@@ -484,6 +480,6 @@
     </main>
   </div>
   
-  <script src="app.js?v=33"></script>
+  <script src="app.js?v=34"></script>
 </body>
 </html>
