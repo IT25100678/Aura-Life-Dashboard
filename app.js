@@ -14,7 +14,7 @@ const INSPIRATIONAL_QUOTES = [
   "Focus on the step in front of you, not the whole staircase."
 ];
 
-const DEFAULT_HABITS = ["Hydrate (2L+)", "Read 10 mins", "Daily Workout", "Mindful Meditation"];
+const DEFAULT_HABITS = ["Drink 8 glasses of water", "Daily workout", "Mindful meditation"];
 
 const DEFAULT_ACTIVITIES = [
   { id: 'sleep', name: 'Sleep', icon: 'sleep', color: 'var(--color-cyan)', defaultValue: 0 },
@@ -940,22 +940,15 @@ function renderHistoryView() {
               ${appState.habits.map(habit => {
                 const isDone = dayLog.habits && dayLog.habits[habit] === true;
                 
-                // Custom SVG sticker icon depending on habit name
-                let habitSvg = `<svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#FFE5D9" stroke="#4A3E3D" stroke-width="1.8"/><path d="M9 12l2 2 4-4" stroke="#4A3E3D" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`;
-                
-                if (habit.toLowerCase().includes("water") || habit.toLowerCase().includes("hydrate")) {
-                  habitSvg = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M5 8h12v4a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V8z" fill="#FFE5D9" stroke="#4A3E3D" stroke-width="1.8"/><path d="M17 10h2a2 2 0 0 1 0 4H17" fill="none" stroke="#4A3E3D" stroke-width="1.8"/></svg>`;
-                } else if (habit.toLowerCase().includes("read") || habit.toLowerCase().includes("book")) {
-                  habitSvg = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 6c3 0 6 0 8 2M20 6c-3 0-6 0-8 2" fill="none" stroke="#4A3E3D" stroke-width="1.8" stroke-linejoin="round"/><rect x="4" y="6" width="16" height="12" rx="1" fill="#FFFFFF" stroke="#4A3E3D" stroke-width="1.8"/></svg>`;
-                }
-                
                 return `
-                  <div class="history-detail-item ${isDone ? 'done' : 'missed'}">
+                  <div class="history-detail-item ${isDone ? 'done' : 'neutral'}">
                     <span>
-                      ${habitSvg}
+                      <i data-lucide="check-circle-2" style="width: 15px; height: 15px; color: ${isDone ? 'var(--color-accent-dark)' : 'var(--text-muted)'}; flex-shrink: 0;"></i>
                       ${habit}
                     </span>
-                    <span>${isDone ? `<i data-lucide="check" style="width: 14px; height: 14px; color: #6b7f64; stroke-width: 3; display: inline-flex;"></i>` : `<i data-lucide="x" style="width: 14px; height: 14px; color: #C62828; stroke-width: 3; display: inline-flex;"></i>`}</span>
+                    <span class="${isDone ? 'habit-done-badge' : 'habit-pending-badge'}">
+                      ${isDone ? '<i data-lucide="check" style="width: 12px; height: 12px;"></i> Done' : '—'}
+                    </span>
                   </div>
                 `;
               }).join('')}
