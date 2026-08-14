@@ -1678,6 +1678,22 @@ function initPriorityStickyNote() {
   const priorityInput = document.getElementById('priorityInput');
   const addBtn = document.getElementById('addPriorityBtn');
 
+  const toggleBtn = document.getElementById('toggleStickyBtn');
+  const minimizeBtn = document.getElementById('minimizeStickyBtn');
+  const floatingWidget = document.getElementById('floatingStickyNote');
+
+  if (toggleBtn && floatingWidget) {
+    toggleBtn.addEventListener('click', () => {
+      floatingWidget.classList.toggle('minimized');
+    });
+  }
+
+  if (minimizeBtn && floatingWidget) {
+    minimizeBtn.addEventListener('click', () => {
+      floatingWidget.classList.add('minimized');
+    });
+  }
+
   if (addBtn && priorityInput) {
     const handleAdd = () => {
       const text = priorityInput.value.trim();
@@ -1692,6 +1708,7 @@ function initPriorityStickyNote() {
       appState.pinnedPriorities.push(newTask);
       saveStateToLocalStorage();
       priorityInput.value = '';
+      if (floatingWidget) floatingWidget.classList.remove('minimized');
       renderPriorityTasks();
     };
 
@@ -1718,7 +1735,7 @@ function renderPriorityTasks() {
   const tasks = appState.pinnedPriorities;
 
   if (countBadge) {
-    countBadge.textContent = `${tasks.length} Pinned`;
+    countBadge.textContent = `${tasks.length}`;
   }
 
   if (tasks.length === 0) {

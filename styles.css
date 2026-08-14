@@ -1794,6 +1794,76 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
 }
 
 /* 📌 Cozy Pastel Sticky Note (Daily Priority Card) */
+.floating-sticky-note {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.sticky-toggle-btn {
+  background: linear-gradient(135deg, #FFFCEE 0%, #FFF5D6 100%);
+  border: 1.8px solid #E5D5A4;
+  border-radius: 50px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(188, 170, 154, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sticky-toggle-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(188, 170, 154, 0.45);
+}
+
+.sticky-mini-badge {
+  font-size: 11px;
+  font-weight: 800;
+  background: #E07A5F;
+  color: #FFFFFF;
+  border-radius: 10px;
+  padding: 2px 7px;
+}
+
+.floating-sticky-note .sticky-note-card {
+  width: 275px;
+  margin: 0;
+  animation: stickySlideDown 0.3s ease;
+}
+
+.floating-sticky-note.minimized .floating-card-body {
+  display: none !important;
+}
+
+.sticky-close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+
+.sticky-close-btn:hover {
+  color: #C62828;
+}
+
+@keyframes stickySlideDown {
+  from { opacity: 0; transform: translateY(-10px) rotate(-1deg); }
+  to { opacity: 1; transform: translateY(0) rotate(-1deg); }
+}
+
 .sticky-note-card {
   background: linear-gradient(135deg, #FFFCEE 0%, #FFF5D6 100%) !important;
   border: 1.8px dashed #E5D5A4 !important;

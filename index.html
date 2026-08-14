@@ -15,7 +15,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css?v=30">
+  <link rel="stylesheet" href="styles.css?v=32">
 </head>
 <body>
   <div class="app-container">
@@ -251,45 +251,58 @@
               </button>
             </div> <!-- Closes Save Status Card -->
 
-            <!-- 📌 Cozy Pastel Sticky Note (Multi-Task Pinned Priorities Card) -->
-            <div class="glass-card sticky-note-card">
-              <!-- Tiny Pushpin Sticker -->
-              <div class="sticky-pin-container">
-                <svg width="24" height="24" viewBox="0 0 24 24" class="sticky-pushpin-svg">
-                  <path d="M12 2L15 8H9L12 2Z" fill="#E07A5F" stroke="#4A3E3D" stroke-width="1.5"/>
-                  <circle cx="12" cy="9" r="4" fill="#FFCAD4" stroke="#4A3E3D" stroke-width="1.8"/>
-                  <line x1="12" y1="13" x2="12" y2="21" stroke="#4A3E3D" stroke-width="2" stroke-linecap="round"/>
-                  <circle cx="10" cy="8" r="1" fill="#FFFFFF"/>
-                </svg>
-              </div>
-
-              <div class="sticky-note-header">
-                <div class="card-header" style="margin-bottom: 0;">
-                  <i data-lucide="pin" class="header-icon" style="color: #E07A5F;"></i>
-                  <h2>Pinned Priorities</h2>
-                </div>
-                <span class="sticky-status-badge" id="priorityCountBadge">0 Pinned</span>
-              </div>
-
-              <div class="sticky-note-body flex-col-gap margin-top-xs">
-                <!-- Add priority input -->
-                <div class="sticky-input-wrapper">
-                  <input type="text" id="priorityInput" placeholder="Add priority task (e.g., Submit Assignment)..." maxlength="50" class="sticky-priority-input">
-                  <button id="addPriorityBtn" class="sticky-save-btn" title="Pin Task">
-                    <i data-lucide="plus"></i>
-                  </button>
-                </div>
-
-                <!-- Dynamic list of pinned priority tasks -->
-                <div class="sticky-tasks-list" id="stickyTasksContainer">
-                  <!-- Pinned tasks rendered by JS -->
-                </div>
-              </div>
-            </div>
-
           </div> <!-- Closes Right Column -->
         </div> <!-- Closes Dashboard Grid -->
       </section>
+
+      <!-- 📌 Floating Desktop Sticky Note (Top Right Corner Pinned Priorities Widget) -->
+      <div class="floating-sticky-note" id="floatingStickyNote">
+        <button class="sticky-toggle-btn" id="toggleStickyBtn" title="Toggle Pinned Sticky Note">
+          <svg width="20" height="20" viewBox="0 0 24 24" class="sticky-pushpin-svg">
+            <path d="M12 2L15 8H9L12 2Z" fill="#E07A5F" stroke="#4A3E3D" stroke-width="1.5"/>
+            <circle cx="12" cy="9" r="4" fill="#FFCAD4" stroke="#4A3E3D" stroke-width="1.8"/>
+            <line x1="12" y1="13" x2="12" y2="21" stroke="#4A3E3D" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="10" cy="8" r="1" fill="#FFFFFF"/>
+          </svg>
+          <span style="font-size: 11.5px; font-weight: 700; color: var(--text-dark);">Priorities</span>
+          <span class="sticky-mini-badge" id="priorityCountBadge">0</span>
+        </button>
+
+        <div class="glass-card sticky-note-card floating-card-body" id="stickyCardBody">
+          <!-- Tiny Pushpin Sticker -->
+          <div class="sticky-pin-container">
+            <svg width="22" height="22" viewBox="0 0 24 24" class="sticky-pushpin-svg">
+              <path d="M12 2L15 8H9L12 2Z" fill="#E07A5F" stroke="#4A3E3D" stroke-width="1.5"/>
+              <circle cx="12" cy="9" r="4" fill="#FFCAD4" stroke="#4A3E3D" stroke-width="1.8"/>
+              <line x1="12" y1="13" x2="12" y2="21" stroke="#4A3E3D" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="10" cy="8" r="1" fill="#FFFFFF"/>
+            </svg>
+          </div>
+
+          <div class="sticky-note-header">
+            <div class="card-header" style="margin-bottom: 0;">
+              <i data-lucide="pin" class="header-icon" style="color: #E07A5F;"></i>
+              <h2 style="font-size: 13px;">Pinned Priorities</h2>
+            </div>
+            <button class="sticky-close-btn" id="minimizeStickyBtn" title="Minimize Sticky Note">&minus;</button>
+          </div>
+
+          <div class="sticky-note-body flex-col-gap margin-top-xs">
+            <!-- Add priority input -->
+            <div class="sticky-input-wrapper">
+              <input type="text" id="priorityInput" placeholder="Add priority task..." maxlength="50" class="sticky-priority-input">
+              <button id="addPriorityBtn" class="sticky-save-btn" title="Pin Task">
+                <i data-lucide="plus"></i>
+              </button>
+            </div>
+
+            <!-- Dynamic list of pinned priority tasks -->
+            <div class="sticky-tasks-list" id="stickyTasksContainer">
+              <!-- Pinned tasks rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- TAB: History -->
       <section id="tab-history" class="tab-content">
@@ -495,6 +508,6 @@
     </main>
   </div>
   
-  <script src="app.js?v=31"></script>
+  <script src="app.js?v=32"></script>
 </body>
 </html>
