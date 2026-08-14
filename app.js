@@ -148,18 +148,6 @@ function loadStateFromLocalStorage() {
       }
       
       if (parsed.logs) appState.logs = parsed.logs;
-      if (parsed.memories) {
-        appState.memories = parsed.memories;
-        // Automatic code-side cleanup: Purge any old sample test memories automatically on startup
-        Object.keys(appState.memories).forEach(k => {
-          const txt = appState.memories[k].text || "";
-          if (txt.includes("coding project milestone") || txt.includes("matcha with university") || txt.includes("evening walk in the park")) {
-            delete appState.memories[k];
-          }
-        });
-      } else {
-        appState.memories = {};
-      }
       
       if (parsed.activities && Array.isArray(parsed.activities) && parsed.activities.length > 0) {
         appState.activities = parsed.activities;
@@ -247,7 +235,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initActivitySliders();
   initHabitTracker();
   initSettingsProfile();
-  initGratitudeJar();
   initPriorityStickyNote();
   
   // Check if today's entry already exists in stored history
@@ -614,155 +601,6 @@ window.deleteActivity = function(actId) {
     renderAnalyticsView();
   }
 };
-
-// -------------------------------------------------------------
-// GRATITUDE MEMORY JAR LOGIC (HEARTS + POPUP MODAL + 30-DAY LOOP)
-// -------------------------------------------------------------
-function initGratitudeJar() {
-  if (!appState.memories) {
-    appState.memories = {};
-  }
-
-  const addBtn = document.getElementById('addGratitudeBtn');
-  const inputEl = document.getElementById('gratitudeInput');
-
-  if (addBtn && inputEl) {
-    const handleSave = (e) => {
-      if (e) e.preventDefault();
-      saveGratitudeEntry();
-    };
-    addBtn.addEventListener('click', handleSave);
-    inputEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') handleSave(e);
-    });
-  }
-
-  // Modal setup
-  const closeBtn = document.getElementById('closeMemoryModal');
-  const overlay = document.getElementById('memoryModalOverlay');
-  if (closeBtn) closeBtn.addEventListener('click', closeMemoryModal);
-  if (overlay) {
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeMemoryModal();
-    });
-  }
-
-  renderGratitudeJar();
-}
-
-function saveGratitudeEntry() {
-  const inputEl = document.getElementById('gratitudeInput');
-  const text = inputEl ? inputEl.value.trim() : "";
-  if (!text) return;
-
-  const colors = ["#ffb5a7", "#dfbca7", "#a3b19b", "#a9c6e2", "#ffcad4", "#c084fc"];
-  const randomColor = colors[Math.floor(Math.random() * colors.length)];
-  const todayKey = todayTracking.date || getFormattedDate(new Date());
-
-  appState.memories[todayKey] = {
-    date: todayKey,
-    text: text,
-    color: randomColor
-  };
-
-  saveStateToLocalStorage();
-  if (inputEl) {
-    inputEl.value = "";
-    inputEl.blur(); // Closes iPhone 16 software keyboard smoothly
-  }
-  renderGratitudeJar();
-  
-  if (window.lucide) window.lucide.createIcons();
-}
-
-function openMemoryModal(dateStr, text, color) {
-  const overlay = document.getElementById('memoryModalOverlay');
-  const dateEl = document.getElementById('modalMemoryDate');
-  const textEl = document.getElementById('modalMemoryText');
-  if (!overlay || !dateEl || !textEl) return;
-
-  dateEl.textContent = getReadableDate(dateStr);
-  textEl.textContent = `"${text}"`;
-  overlay.classList.add('active');
-}
-
-function closeMemoryModal() {
-  const overlay = document.getElementById('memoryModalOverlay');
-  if (overlay) overlay.classList.remove('active');
-}
-
-function renderGratitudeJar() {
-  const jarGroup = document.getElementById('jarStarsGroup');
-  const chipsContainer = document.getElementById('gratitudeDateChips');
-  if (!jarGroup || !chipsContainer) return;
-
-  jarGroup.innerHTML = '';
-  chipsContainer.innerHTML = '';
-
-  // 30-Day Rolling Loop Filter: Filter memories to past 30 days window
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-  thirtyDaysAgo.setHours(0, 0, 0, 0);
-
-  const activeMemories = Object.values(appState.memories || {})
-    .filter(m => new Date(m.date) >= thirtyDaysAgo)
-    .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-  if (activeMemories.length === 0) {
-    return;
-  }
-
-  // Render SVG Origami Hearts inside the glass jar (max 30 hearts per cycle)
-  activeMemories.slice(0, 30).forEach((entry, idx) => {
-    const colCount = 4;
-    const row = Math.floor(idx / colCount);
-    const col = idx % colCount;
-
-    const x = 46 + (col * 20) + ((idx % 2) * 4);
-    const y = 166 - (row * 18) - ((idx % 3) * 2);
-    const rotation = ((idx * 23) % 40) - 20; // Soft heart tilts
-    const color = entry.color || "#ffb5a7";
-
-    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.setAttribute("class", "jar-star-item");
-    g.setAttribute("transform", `translate(${x}, ${y}) rotate(${rotation})`);
-    g.setAttribute("title", `${entry.date}: Click to view memory`);
-
-    g.innerHTML = `
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" transform="scale(0.55) translate(-12, -12)" fill="${color}" stroke="#4A3E3D" stroke-width="1.8" stroke-linejoin="round"/>
-    `;
-
-    g.addEventListener('click', () => {
-      openMemoryModal(entry.date, entry.text, color);
-    });
-
-    jarGroup.appendChild(g);
-
-    // Render Compact Date Chip Button
-    const chipBtn = document.createElement('button');
-    chipBtn.className = 'date-chip-btn';
-    chipBtn.innerHTML = `
-      <svg width="10" height="10" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="${color}" stroke="#4A3E3D" stroke-width="2"/></svg>
-      ${getReadableMonthDay(entry.date)}
-    `;
-
-    chipBtn.addEventListener('click', () => {
-      openMemoryModal(entry.date, entry.text, color);
-    });
-
-    chipsContainer.appendChild(chipBtn);
-  });
-}
-
-function getReadableMonthDay(dateStr) {
-  if (!dateStr) return "";
-  const parts = dateStr.split('-');
-  if (parts.length < 3) return dateStr;
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const mIndex = parseInt(parts[1], 10) - 1;
-  const dayNum = parseInt(parts[2], 10);
-  return `${monthNames[mIndex]} ${dayNum}`;
-}
 
 function calculateHabitStreak(habitName) {
   let streak = 0;
@@ -1150,13 +988,10 @@ function renderHistoryView() {
           // Generate date-seeded reflection/motivation
           const text = getSeededReflection(dayStr, missedGym, missedWater);
           const isAligned = !missedGym && !missedWater;
-          const memory = (appState.memories && appState.memories[dayStr]) ? appState.memories[dayStr].text : null;
-          
           reflectionBox.innerHTML = `
             <i data-lucide="${isAligned ? 'sparkles' : 'lightbulb'}" style="width: 18px; height: 18px; color: ${isAligned ? '#a3b19b' : 'var(--color-accent-dark)'}; flex-shrink: 0;"></i>
             <div>
               ${text}
-              ${memory ? `<div style="margin-top: 6px; padding: 4px 8px; background: rgba(255,255,255,0.7); border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--color-accent-dark);">🌟 Happy Memory: "${memory}"</div>` : ''}
             </div>
           `;
           reflectionBox.style.display = "flex";
@@ -1768,7 +1603,6 @@ function resetData() {
     renderActivitiesList();
     renderHistoryView();
     renderAnalyticsView();
-    renderGratitudeJar();
     renderPriorityTasks();
     updateNavUserDisplay();
     
