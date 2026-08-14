@@ -1688,8 +1688,28 @@ input[type="text"]:focus {
 }
 
 /* Force same font for every single input, text, button, and description box */
-body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
+body, input, button, select, textarea, span, p, h1, h3, h4, option, label {
   font-family: 'Quicksand', 'Nunito', sans-serif !important;
+}
+
+/* Card headings and h2s keep the base font by default; the handwritten accent font below overrides only .card-header h2 and .quote-text */
+h2 {
+  font-family: 'Quicksand', 'Nunito', sans-serif !important;
+}
+
+/* --- Handwritten Accent Font: card headings + quote --- */
+.card-header h2 {
+  font-family: 'Caveat', 'Quicksand', sans-serif !important;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.quote-text {
+  font-family: 'Caveat', 'Quicksand', sans-serif !important;
+  font-size: 17px;
+  font-style: normal;
+  line-height: 1.4;
 }
 
 /* --- Cozy Scrapbook Stickers for Dashboard & History --- */
