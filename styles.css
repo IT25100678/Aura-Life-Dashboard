@@ -1,10 +1,10 @@
 /* ==========================================
-   Aura Life Dashboard - Aesthetic Pinterest / Cozy Cream Theme
+   Aura Life Dashboard - Warm Neutral Cream Theme
    ========================================== */
 
-/* 1. Global Reset & Curated Cozy Pastels */
+/* 1. Global Reset & Warm Neutral Palette */
 :root {
-  /* Color Palette - Pinterest Cream & Muted Pastels */
+  /* Color Palette - Warm Cream & Earthy Neutrals */
   --bg-primary: #FAF6F0;      /* Warm cozy cream */
   --bg-card: #FFFFFF;         /* Soft paper white */
   --bg-element: #F4ECE1;      /* Light oatmeal beige */
@@ -13,36 +13,36 @@
   --text-muted: #8E7C77;      /* Warm taupe grey */
   --text-dark: #B5A8A3;       /* Soft linen dust */
   
-  /* Primary Pinterest Accents */
-  --color-accent: #FFB5A7;    /* Soft pastel pink */
-  --color-accent-hover: #FCD5CE; /* Lighter blush */
-  --color-accent-glow: rgba(255, 181, 167, 0.2);
-  --color-accent-secondary: #FEC5BB;
-  --color-accent-dark: #E29578;
+  /* Primary Accents - Warm Terracotta/Clay (gender-neutral, earthy) */
+  --color-accent: #C97C5D;    /* Warm terracotta/clay */
+  --color-accent-hover: #DDA184; /* Lighter clay */
+  --color-accent-glow: rgba(201, 124, 93, 0.18);
+  --color-accent-secondary: #D4A373; /* Warm amber/tan */
+  --color-accent-dark: #A85D3E; /* Deeper terracotta */
   
-  /* Cozy Mood Colors */
-  --accent-mood-5: #FFB5A7;   /* Energetic - Soft Pink */
-  --accent-mood-4: #D8E2DC;   /* Calm - Sage Mint */
-  --accent-mood-3: #FFE5D9;   /* Neutral - Cream Peach */
-  --accent-mood-2: #ECE4DB;   /* Low - Linen Warm Grey */
-  --accent-mood-1: #FEC5BB;   /* Stressed - Pastel Rose */
+  /* Mood Colors - Muted Earth Tones */
+  --accent-mood-5: #E3A56F;   /* Energetic - Warm Amber */
+  --accent-mood-4: #A3BFAB;   /* Calm - Muted Sage */
+  --accent-mood-3: #E4D8C4;   /* Neutral - Warm Sand */
+  --accent-mood-2: #B3A9A0;   /* Low - Warm Stone Grey */
+  --accent-mood-1: #C17B6B;   /* Stressed - Dusty Clay Red */
 
-  /* Borders & Soft Pillowy Shadows */
+  /* Borders & Soft Shadows */
   --border-color: #EFE9DF;
-  --border-focus: #FFB5A7;
+  --border-focus: #C97C5D;
   --shadow-sm: 0 2px 8px rgba(188, 170, 154, 0.08);
   --shadow-md: 0 10px 25px rgba(188, 170, 154, 0.15);
   --shadow-lg: 0 20px 40px rgba(188, 170, 154, 0.2);
   
-  /* Sizing and Pill-shapes */
+  /* Sizing - Slightly less rounded, less "bubbly" */
   --sidebar-width: 250px;
-  --radius-sm: 10px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
   --radius-pill: 50px;
   
   --transition-fast: 0.2s ease;
-  --transition-normal: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy cozy physics */
+  --transition-normal: 0.3s cubic-bezier(0.34, 1.2, 0.64, 1); /* Slightly less bouncy */
 }
 
 * {
@@ -1688,28 +1688,8 @@ input[type="text"]:focus {
 }
 
 /* Force same font for every single input, text, button, and description box */
-body, input, button, select, textarea, span, p, h1, h3, h4, option, label {
+body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
   font-family: 'Quicksand', 'Nunito', sans-serif !important;
-}
-
-/* Card headings and h2s keep the base font by default; the handwritten accent font below overrides only .card-header h2 and .quote-text */
-h2 {
-  font-family: 'Quicksand', 'Nunito', sans-serif !important;
-}
-
-/* --- Handwritten Accent Font: card headings + quote --- */
-.card-header h2 {
-  font-family: 'Caveat', 'Quicksand', sans-serif !important;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-}
-
-.quote-text {
-  font-family: 'Caveat', 'Quicksand', sans-serif !important;
-  font-size: 17px;
-  font-style: normal;
-  line-height: 1.4;
 }
 
 /* --- Cozy Scrapbook Stickers for Dashboard & History --- */
@@ -1735,36 +1715,12 @@ h2 {
   height: auto;
 }
 
-.mood-rainbow-sticker {
-  bottom: -16px;
-  right: -14px;
-  width: 65px;
-  height: 65px;
-  transform: rotate(-12deg);
-}
-
 .activity-star-sticker {
   top: -12px;
   right: -10px;
   width: 48px;
   height: 48px;
   transform: rotate(15deg);
-}
-
-.habits-snail-sticker {
-  bottom: -12px;
-  right: -8px;
-  width: 55px;
-  height: 55px;
-  transform: rotate(-5deg);
-}
-
-.save-coffee-sticker {
-  top: 10px;
-  right: 12px;
-  width: 50px;
-  height: 50px;
-  transform: rotate(8deg);
 }
 
 /* Activity Sticker Selector styles */
