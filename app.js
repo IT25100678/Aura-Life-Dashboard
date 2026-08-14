@@ -1520,8 +1520,11 @@ function applyThemeColor(colorName) {
 
 function setThemeMode(mode) {
   const root = document.documentElement;
+  const body = document.body;
   appState.themeMode = mode || 'light';
+  
   root.setAttribute('data-theme', appState.themeMode);
+  if (body) body.setAttribute('data-theme', appState.themeMode);
 
   // Update Settings buttons state
   const lightBtn = document.getElementById('lightModeBtn');

@@ -1932,51 +1932,106 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
 /* -------------------------------------------------------------
    COZY MIDNIGHT DARK MODE THEME 🌙
    ------------------------------------------------------------- */
+html[data-theme="dark"],
 [data-theme="dark"] {
-  --bg-gradient: linear-gradient(135deg, #1C1917 0%, #141210 100%);
-  --bg-card: rgba(34, 30, 28, 0.88);
-  --bg-sidebar: rgba(28, 25, 23, 0.92);
-  --bg-element: rgba(48, 42, 39, 0.9);
-  --text-dark: #F5EBE6;
-  --text-muted: #B8A9A4;
-  --border-color: rgba(110, 95, 88, 0.45);
+  --bg-primary: #141210 !important;
+  --bg-card: rgba(30, 26, 24, 0.92) !important;
+  --bg-element: rgba(45, 39, 36, 0.9) !important;
+  --text-primary: #F5EBE6 !important;
+  --text-muted: #B8A9A4 !important;
+  --text-dark: #F5EBE6 !important;
+  --border-color: rgba(110, 95, 88, 0.45) !important;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.45);
 }
 
+html[data-theme="dark"] body,
 [data-theme="dark"] body {
   background-color: #141210 !important;
+  background: #141210 !important;
   color: #F5EBE6 !important;
 }
 
-[data-theme="dark"] .glass-card {
-  background: rgba(34, 30, 28, 0.88) !important;
-  border-color: rgba(110, 95, 88, 0.45) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+html[data-theme="dark"] .app-container,
+[data-theme="dark"] .app-container {
+  background-color: #141210 !important;
+  background-image: none !important;
+  background: #141210 !important;
 }
 
+html[data-theme="dark"] .sidebar-container,
+html[data-theme="dark"] .sidebar-nav,
+[data-theme="dark"] .sidebar-container,
 [data-theme="dark"] .sidebar-nav {
-  background: rgba(28, 25, 23, 0.92) !important;
+  background: rgba(24, 21, 19, 0.95) !important;
   border-color: rgba(110, 95, 88, 0.45) !important;
 }
 
+html[data-theme="dark"] .glass-card,
+[data-theme="dark"] .glass-card {
+  background: rgba(30, 26, 24, 0.92) !important;
+  border-color: rgba(110, 95, 88, 0.45) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+  color: #F5EBE6 !important;
+}
+
+html[data-theme="dark"] .nav-btn,
+[data-theme="dark"] .nav-btn {
+  color: #B8A9A4 !important;
+}
+
+html[data-theme="dark"] .nav-btn:hover,
+[data-theme="dark"] .nav-btn:hover {
+  background: rgba(60, 52, 48, 0.6) !important;
+  color: #F5EBE6 !important;
+}
+
+html[data-theme="dark"] .nav-btn.active,
+[data-theme="dark"] .nav-btn.active {
+  background: rgba(45, 39, 36, 0.95) !important;
+  color: var(--color-accent-dark) !important;
+}
+
+html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select,
 [data-theme="dark"] input[type="text"],
 [data-theme="dark"] textarea,
 [data-theme="dark"] select {
-  background: rgba(48, 42, 39, 0.9) !important;
+  background: rgba(45, 39, 36, 0.95) !important;
   color: #F5EBE6 !important;
   border-color: rgba(110, 95, 88, 0.5) !important;
 }
 
+html[data-theme="dark"] .spotlight-task-item,
 [data-theme="dark"] .spotlight-task-item {
-  background: rgba(48, 42, 39, 0.9) !important;
+  background: rgba(45, 39, 36, 0.95) !important;
   border-color: rgba(110, 95, 88, 0.45) !important;
   color: #F5EBE6 !important;
 }
 
-[data-theme="dark"] .spec-card {
-  background: rgba(48, 42, 39, 0.8) !important;
+html[data-theme="dark"] .quote-card,
+[data-theme="dark"] .quote-card {
+  background: rgba(45, 39, 36, 0.8) !important;
   border-color: rgba(110, 95, 88, 0.45) !important;
+  color: #F5EBE6 !important;
+}
+
+html[data-theme="dark"] .spec-card,
+[data-theme="dark"] .spec-card {
+  background: rgba(45, 39, 36, 0.8) !important;
+  border-color: rgba(110, 95, 88, 0.45) !important;
+  color: #F5EBE6 !important;
 }
 
 /* Header theme toggle button */
