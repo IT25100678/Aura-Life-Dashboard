@@ -1793,48 +1793,9 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
   z-index: 5;
 }
 
-/* 🌱 Daily Focus Bloom (Priority Garden Card) */
-.focus-bloom-card {
+/* 📌 Daily Priorities Card (Clean & Theme Responsive) */
+.daily-priorities-card {
   border-left: 3.5px solid var(--color-accent-dark) !important;
-}
-
-.garden-bloom-patch {
-  background: linear-gradient(180deg, var(--color-accent-glow) 0%, rgba(229, 213, 164, 0.25) 100%);
-  border: 1.5px dashed var(--color-accent);
-  border-radius: 12px;
-  padding: 8px 12px;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.garden-flowers-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.bloom-flower-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation: sproutPop 0.4s ease;
-}
-
-.bloom-flower-item:hover {
-  transform: scale(1.2) translateY(-2px);
-}
-
-@keyframes sproutPop {
-  0% { transform: scale(0); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
 }
 
 .spotlight-input-wrapper {
@@ -1911,19 +1872,22 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
   background: rgba(163, 177, 155, 0.15);
 }
 
-.bloom-action-btn {
+.priority-done-btn {
   background: var(--color-accent-glow);
   border: 1px solid var(--color-accent);
   color: var(--color-accent-dark);
   border-radius: 6px;
   padding: 3px 8px;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   transition: all 0.2s ease;
 }
 
-.bloom-action-btn:hover {
+.priority-done-btn:hover {
   background: var(--color-accent);
   color: #FFFFFF;
 }
