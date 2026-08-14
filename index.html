@@ -15,7 +15,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css?v=28">
+  <link rel="stylesheet" href="styles.css?v=29">
 </head>
 <body>
   <div class="app-container">
@@ -272,11 +272,34 @@
               </div>
             </div>
 
+            <!-- Save Card -->
+            <div class="glass-card flex-center flex-col-gap justify-center save-status-card">
+              <!-- Cute Coffee Cup Sticker -->
+              <svg class="scrapbook-sticker save-coffee-sticker" viewBox="0 0 100 100">
+                <path d="M30,40 H70 C70,68 30,68 30,40 Z" fill="#D8E2DC" stroke="#4A3E3D" stroke-width="1.8"/>
+                <path d="M70,46 C77,46 77,58 70,58" fill="none" stroke="#4A3E3D" stroke-width="1.8"/>
+                <path d="M40,28 Q43,20 40,15" fill="none" stroke="#E29578" stroke-width="1.5"/>
+                <path d="M50,28 Q53,20 50,15" fill="none" stroke="#E29578" stroke-width="1.5"/>
+                <circle cx="44" cy="50" r="1.2" fill="#4A3E3D"/>
+                <circle cx="56" cy="50" r="1.2" fill="#4A3E3D"/>
+                <path d="M48 55c.5.5 1.5.5 2 0" stroke="#4A3E3D" stroke-width="1" stroke-linecap="round" fill="none"/>
+              </svg>
+              <div class="glowing-orb" id="saveIndicatorOrb"></div>
+              <div class="save-status-info text-center">
+                <h3 id="saveStatusTitle">Unsaved Changes</h3>
+                <p id="saveStatusDesc" class="description">You haven't logged today's activities yet.</p>
+              </div>
+              <button class="btn btn-primary" id="logDayBtn">
+                <i data-lucide="plus-circle"></i>
+                <span>Log Today's Entry</span>
+              </button>
+            </div> <!-- Closes Save Status Card -->
+
             <!-- 📌 Cozy Pastel Sticky Note (Daily Priority Card) -->
             <div class="glass-card sticky-note-card">
               <!-- Tiny Pushpin Sticker -->
               <div class="sticky-pin-container">
-                <svg width="22" height="22" viewBox="0 0 24 24" class="sticky-pushpin-svg">
+                <svg width="24" height="24" viewBox="0 0 24 24" class="sticky-pushpin-svg">
                   <path d="M12 2L15 8H9L12 2Z" fill="#E07A5F" stroke="#4A3E3D" stroke-width="1.5"/>
                   <circle cx="12" cy="9" r="4" fill="#FFCAD4" stroke="#4A3E3D" stroke-width="1.8"/>
                   <line x1="12" y1="13" x2="12" y2="21" stroke="#4A3E3D" stroke-width="2" stroke-linecap="round"/>
@@ -305,74 +328,6 @@
                   <span class="sticky-checkbox-custom"></span>
                   <span class="sticky-checkbox-label" id="priorityCheckText">Mark Priority as Done ✨</span>
                 </label>
-              </div>
-            </div>
-
-            <!-- Save Card -->
-            <div class="glass-card flex-center flex-col-gap justify-center save-status-card">
-              <!-- Cute Coffee Cup Sticker -->
-              <svg class="scrapbook-sticker save-coffee-sticker" viewBox="0 0 100 100">
-                <path d="M30,40 H70 C70,68 30,68 30,40 Z" fill="#D8E2DC" stroke="#4A3E3D" stroke-width="1.8"/>
-                <path d="M70,46 C77,46 77,58 70,58" fill="none" stroke="#4A3E3D" stroke-width="1.8"/>
-                <path d="M40,28 Q43,20 40,15" fill="none" stroke="#E29578" stroke-width="1.5"/>
-                <path d="M50,28 Q53,20 50,15" fill="none" stroke="#E29578" stroke-width="1.5"/>
-                <circle cx="44" cy="50" r="1.2" fill="#4A3E3D"/>
-                <circle cx="56" cy="50" r="1.2" fill="#4A3E3D"/>
-                <path d="M48 55c.5.5 1.5.5 2 0" stroke="#4A3E3D" stroke-width="1" stroke-linecap="round" fill="none"/>
-              </svg>
-              <div class="glowing-orb" id="saveIndicatorOrb"></div>
-              <div class="save-status-info text-center">
-                <h3 id="saveStatusTitle">Unsaved Changes</h3>
-                <p id="saveStatusDesc" class="description">You haven't logged today's activities yet.</p>
-              </div>
-              <button class="btn btn-primary" id="logDayBtn">
-                <i data-lucide="plus-circle"></i>
-                <span>Log Today's Entry</span>
-              </button>
-            </div> <!-- Closes Save Status Card -->
-
-            <!-- Gratitude Memory Jar Card -->
-            <div class="glass-card gratitude-jar-card">
-              <div class="card-header">
-                <i data-lucide="sparkles" class="header-icon icon-streak"></i>
-                <h2>Gratitude Memory Jar</h2>
-              </div>
-              <div class="card-body flex-col-gap">
-                <!-- Jar & Stars Visual Area -->
-                <div class="jar-display-area">
-                  <svg class="glass-jar-svg" viewBox="0 0 160 200">
-                    <!-- Lid -->
-                    <rect x="50" y="10" width="60" height="14" rx="4" fill="#D4A373" stroke="#4A3E3D" stroke-width="2.5"/>
-                    <rect x="55" y="24" width="50" height="8" rx="2" fill="#E2B49A" stroke="#4A3E3D" stroke-width="2"/>
-                    <!-- Jar Neck -->
-                    <path d="M58,32 L54,42 L106,42 L102,32 Z" fill="rgba(255, 255, 255, 0.4)" stroke="#4A3E3D" stroke-width="2"/>
-                    <!-- Jar Body -->
-                    <path d="M54,42 C30,48 20,70 20,120 C20,175 35,188 80,188 C125,188 140,175 140,120 C140,70 130,48 106,42 Z" fill="rgba(255, 255, 255, 0.55)" stroke="#4A3E3D" stroke-width="2.5"/>
-                    <!-- Glass Highlights -->
-                    <path d="M34,65 C30,85 30,135 36,165" fill="none" stroke="rgba(255, 255, 255, 0.85)" stroke-width="3.5" stroke-linecap="round"/>
-                    <path d="M42,60 C38,80 38,120 44,150" fill="none" stroke="rgba(255, 255, 255, 0.5)" stroke-width="2" stroke-linecap="round"/>
-                    <!-- Dynamic Origami Stars Group -->
-                    <g id="jarStarsGroup"></g>
-                  </svg>
-                </div>
-
-                <!-- Input area -->
-                <p class="description" style="font-size: 11.5px; margin: 0; text-align: center;">What brought you joy today?</p>
-                <div class="quick-add-habit" style="margin-top: 2px;">
-                  <input type="text" id="gratitudeInput" placeholder="A happy memory or micro-joy..." maxlength="45">
-                  <button class="btn-icon" id="addGratitudeBtn" title="Drop Heart in Jar">
-                    <i data-lucide="heart"></i>
-                  </button>
-                </div>
-
-                <!-- Compact 30-Day Date Chips Grid -->
-                <div class="gratitude-reel-container margin-top-xs">
-                  <span class="spec-label" style="font-size: 10px; display: block; margin-bottom: 4px;">Past 30 Days Memories</span>
-                  <div class="date-chips-grid" id="gratitudeDateChips">
-                    <!-- Date chips rendered by JS -->
-                  </div>
-                </div>
-
               </div>
             </div>
 
@@ -637,6 +592,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=28"></script>
+  <script src="app.js?v=29"></script>
 </body>
 </html>
