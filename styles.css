@@ -1930,13 +1930,13 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
 }
 
 /* -------------------------------------------------------------
-   COZY MIDNIGHT DARK MODE THEME 🌙
+   COZY MIDNIGHT DARK MODE THEME 🌙 (100% COMPLETE WEBSITE DARK THEME)
    ------------------------------------------------------------- */
 html[data-theme="dark"],
 [data-theme="dark"] {
   --bg-primary: #141210 !important;
-  --bg-card: rgba(30, 26, 24, 0.92) !important;
-  --bg-element: rgba(45, 39, 36, 0.9) !important;
+  --bg-card: rgba(30, 26, 24, 0.94) !important;
+  --bg-element: rgba(48, 42, 39, 0.95) !important;
   --text-primary: #F5EBE6 !important;
   --text-muted: #B8A9A4 !important;
   --text-dark: #F5EBE6 !important;
@@ -1945,44 +1945,47 @@ html[data-theme="dark"],
   --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.45);
 }
 
+/* 1. Body, App Container, Main Content */
 html[data-theme="dark"] body,
-[data-theme="dark"] body {
-  background-color: #141210 !important;
-  background: #141210 !important;
-  color: #F5EBE6 !important;
-}
-
+[data-theme="dark"] body,
 html[data-theme="dark"] .app-container,
-[data-theme="dark"] .app-container {
+[data-theme="dark"] .app-container,
+html[data-theme="dark"] .main-content,
+[data-theme="dark"] .main-content {
   background-color: #141210 !important;
-  background-image: none !important;
   background: #141210 !important;
-}
-
-html[data-theme="dark"] .sidebar-container,
-html[data-theme="dark"] .sidebar-nav,
-[data-theme="dark"] .sidebar-container,
-[data-theme="dark"] .sidebar-nav {
-  background: rgba(24, 21, 19, 0.95) !important;
-  border-color: rgba(110, 95, 88, 0.45) !important;
-}
-
-html[data-theme="dark"] .glass-card,
-[data-theme="dark"] .glass-card {
-  background: rgba(30, 26, 24, 0.92) !important;
-  border-color: rgba(110, 95, 88, 0.45) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
-}
-
-html[data-theme="dark"] h1,
-html[data-theme="dark"] h2,
-html[data-theme="dark"] h3,
-html[data-theme="dark"] h4,
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-[data-theme="dark"] h4 {
+  background-image: none !important;
   color: #F5EBE6 !important;
+}
+
+/* 2. Left Sidebar, Header, Logo, Navigation & User Footer */
+html[data-theme="dark"] .app-sidebar,
+[data-theme="dark"] .app-sidebar,
+html[data-theme="dark"] .sidebar-header,
+[data-theme="dark"] .sidebar-header,
+html[data-theme="dark"] .sidebar-footer,
+[data-theme="dark"] .sidebar-footer,
+html[data-theme="dark"] .logo-container,
+[data-theme="dark"] .logo-container,
+html[data-theme="dark"] .user-card,
+[data-theme="dark"] .user-card {
+  background: #1A1715 !important;
+  border-color: rgba(110, 95, 88, 0.45) !important;
+  color: #F5EBE6 !important;
+}
+
+html[data-theme="dark"] .logo-text,
+[data-theme="dark"] .logo-text,
+html[data-theme="dark"] .nav-user-name,
+[data-theme="dark"] .nav-user-name,
+html[data-theme="dark"] #navUsername,
+[data-theme="dark"] #navUsername {
+  color: #F5EBE6 !important;
+}
+
+html[data-theme="dark"] .nav-user-focus,
+[data-theme="dark"] .nav-user-focus {
+  color: #B8A9A4 !important;
 }
 
 html[data-theme="dark"] .nav-btn,
@@ -2002,6 +2005,58 @@ html[data-theme="dark"] .nav-btn.active,
   color: var(--color-accent-dark) !important;
 }
 
+/* 3. Glass Cards, Activity Sliders, Habit Items & Inputs */
+html[data-theme="dark"] .glass-card,
+[data-theme="dark"] .glass-card {
+  background: rgba(30, 26, 24, 0.94) !important;
+  border-color: rgba(110, 95, 88, 0.45) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-theme="dark"] .slider-group,
+[data-theme="dark"] .slider-group,
+html[data-theme="dark"] .habit-item,
+[data-theme="dark"] .habit-item {
+  background: rgba(45, 39, 36, 0.9) !important;
+  border-color: rgba(110, 95, 88, 0.45) !important;
+  color: #F5EBE6 !important;
+}
+
+html[data-theme="dark"] .slider-name,
+[data-theme="dark"] .slider-name,
+html[data-theme="dark"] .habit-name,
+[data-theme="dark"] .habit-name,
+html[data-theme="dark"] .slider-value,
+[data-theme="dark"] .slider-value {
+  color: #F5EBE6 !important;
+}
+
+/* 4. Headings & Text Colors */
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+html[data-theme="dark"] p,
+[data-theme="dark"] p,
+html[data-theme="dark"] label,
+[data-theme="dark"] label,
+html[data-theme="dark"] span,
+[data-theme="dark"] span {
+  color: #F5EBE6;
+}
+
+html[data-theme="dark"] .description,
+[data-theme="dark"] .description,
+html[data-theme="dark"] .subtitle,
+[data-theme="dark"] .subtitle {
+  color: #B8A9A4 !important;
+}
+
+/* 5. Inputs, Textareas, Selects & Spotlight Task Items */
 html[data-theme="dark"] input[type="text"],
 html[data-theme="dark"] textarea,
 html[data-theme="dark"] select,
@@ -2020,18 +2075,45 @@ html[data-theme="dark"] .spotlight-task-item,
   color: #F5EBE6 !important;
 }
 
+/* 6. Quote Card, Spec Card & Overview Previews */
 html[data-theme="dark"] .quote-card,
-[data-theme="dark"] .quote-card {
-  background: rgba(45, 39, 36, 0.8) !important;
+[data-theme="dark"] .quote-card,
+html[data-theme="dark"] .spec-card,
+[data-theme="dark"] .spec-card,
+html[data-theme="dark"] .save-status-card,
+[data-theme="dark"] .save-status-card {
+  background: rgba(45, 39, 36, 0.85) !important;
   border-color: rgba(110, 95, 88, 0.45) !important;
   color: #F5EBE6 !important;
 }
 
-html[data-theme="dark"] .spec-card,
-[data-theme="dark"] .spec-card {
-  background: rgba(45, 39, 36, 0.8) !important;
+/* 7. History & Months Accordion, Heatmap Grid & Details Pane */
+html[data-theme="dark"] .month-accordion-item,
+[data-theme="dark"] .month-accordion-item,
+html[data-theme="dark"] .month-accordion-header,
+[data-theme="dark"] .month-accordion-header,
+html[data-theme="dark"] .month-accordion-body,
+[data-theme="dark"] .month-accordion-body,
+html[data-theme="dark"] .details-pane,
+[data-theme="dark"] .details-pane,
+html[data-theme="dark"] .reflection-hover-box,
+[data-theme="dark"] .reflection-hover-box {
+  background: rgba(30, 26, 24, 0.94) !important;
   border-color: rgba(110, 95, 88, 0.45) !important;
   color: #F5EBE6 !important;
+}
+
+html[data-theme="dark"] .heatmap-day,
+[data-theme="dark"] .heatmap-day {
+  background: rgba(48, 42, 39, 0.9) !important;
+  border-color: rgba(110, 95, 88, 0.3) !important;
+  color: #F5EBE6 !important;
+}
+
+/* 8. Range Sliders & Checkboxes in Dark Mode */
+html[data-theme="dark"] .range-slider,
+[data-theme="dark"] .range-slider {
+  background: rgba(60, 52, 48, 0.9) !important;
 }
 
 /* Header theme toggle button */
