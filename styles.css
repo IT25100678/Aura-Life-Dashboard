@@ -1,10 +1,10 @@
 /* ==========================================
-   Aura Life Dashboard - Warm Neutral Cream Theme
+   Aura Life Dashboard - Aesthetic Pinterest / Cozy Cream Theme
    ========================================== */
 
-/* 1. Global Reset & Warm Neutral Palette */
+/* 1. Global Reset & Curated Cozy Pastels */
 :root {
-  /* Color Palette - Warm Cream & Earthy Neutrals */
+  /* Color Palette - Pinterest Cream & Muted Pastels */
   --bg-primary: #FAF6F0;      /* Warm cozy cream */
   --bg-card: #FFFFFF;         /* Soft paper white */
   --bg-element: #F4ECE1;      /* Light oatmeal beige */
@@ -13,36 +13,36 @@
   --text-muted: #8E7C77;      /* Warm taupe grey */
   --text-dark: #B5A8A3;       /* Soft linen dust */
   
-  /* Primary Accents - Warm Terracotta/Clay (gender-neutral, earthy) */
-  --color-accent: #C97C5D;    /* Warm terracotta/clay */
-  --color-accent-hover: #DDA184; /* Lighter clay */
-  --color-accent-glow: rgba(201, 124, 93, 0.18);
-  --color-accent-secondary: #D4A373; /* Warm amber/tan */
-  --color-accent-dark: #A85D3E; /* Deeper terracotta */
+  /* Primary Pinterest Accents */
+  --color-accent: #FFB5A7;    /* Soft pastel pink */
+  --color-accent-hover: #FCD5CE; /* Lighter blush */
+  --color-accent-glow: rgba(255, 181, 167, 0.2);
+  --color-accent-secondary: #FEC5BB;
+  --color-accent-dark: #E29578;
   
-  /* Mood Colors - Muted Earth Tones */
-  --accent-mood-5: #E3A56F;   /* Energetic - Warm Amber */
-  --accent-mood-4: #A3BFAB;   /* Calm - Muted Sage */
-  --accent-mood-3: #E4D8C4;   /* Neutral - Warm Sand */
-  --accent-mood-2: #B3A9A0;   /* Low - Warm Stone Grey */
-  --accent-mood-1: #C17B6B;   /* Stressed - Dusty Clay Red */
+  /* Cozy Mood Colors */
+  --accent-mood-5: #FFB5A7;   /* Energetic - Soft Pink */
+  --accent-mood-4: #D8E2DC;   /* Calm - Sage Mint */
+  --accent-mood-3: #FFE5D9;   /* Neutral - Cream Peach */
+  --accent-mood-2: #ECE4DB;   /* Low - Linen Warm Grey */
+  --accent-mood-1: #FEC5BB;   /* Stressed - Pastel Rose */
 
-  /* Borders & Soft Shadows */
+  /* Borders & Soft Pillowy Shadows */
   --border-color: #EFE9DF;
-  --border-focus: #C97C5D;
+  --border-focus: #FFB5A7;
   --shadow-sm: 0 2px 8px rgba(188, 170, 154, 0.08);
   --shadow-md: 0 10px 25px rgba(188, 170, 154, 0.15);
   --shadow-lg: 0 20px 40px rgba(188, 170, 154, 0.2);
   
-  /* Sizing - Slightly less rounded, less "bubbly" */
+  /* Sizing and Pill-shapes */
   --sidebar-width: 250px;
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
   --radius-pill: 50px;
   
   --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s cubic-bezier(0.34, 1.2, 0.64, 1); /* Slightly less bouncy */
+  --transition-normal: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy cozy physics */
 }
 
 * {
@@ -1715,12 +1715,36 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
   height: auto;
 }
 
+.mood-rainbow-sticker {
+  bottom: -16px;
+  right: -14px;
+  width: 65px;
+  height: 65px;
+  transform: rotate(-12deg);
+}
+
 .activity-star-sticker {
   top: -12px;
   right: -10px;
   width: 48px;
   height: 48px;
   transform: rotate(15deg);
+}
+
+.habits-snail-sticker {
+  bottom: -12px;
+  right: -8px;
+  width: 55px;
+  height: 55px;
+  transform: rotate(-5deg);
+}
+
+.save-coffee-sticker {
+  top: 10px;
+  right: 12px;
+  width: 50px;
+  height: 50px;
+  transform: rotate(8deg);
 }
 
 /* Activity Sticker Selector styles */
@@ -1767,5 +1791,149 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
   height: 38px;
   transform: rotate(2deg);
   z-index: 5;
+}
+
+/* 📌 Cozy Pastel Sticky Note (Daily Priority Card) */
+.sticky-note-card {
+  background: linear-gradient(135deg, #FFFCEE 0%, #FFF5D6 100%) !important;
+  border: 1.8px dashed #E5D5A4 !important;
+  box-shadow: 2px 6px 16px rgba(188, 170, 154, 0.22) !important;
+  transform: rotate(-1deg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: visible !important;
+}
+
+.sticky-note-card:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: 2px 8px 20px rgba(188, 170, 154, 0.3) !important;
+}
+
+.sticky-pin-container {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  filter: drop-shadow(0 2px 4px rgba(74, 62, 61, 0.2));
+}
+
+.sticky-pushpin-svg {
+  animation: pinBounce 3s infinite ease-in-out;
+}
+
+@keyframes pinBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.sticky-note-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.sticky-status-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(224, 122, 95, 0.15);
+  color: #E07A5F;
+  border: 1px solid rgba(224, 122, 95, 0.3);
+  transition: all 0.2s ease;
+}
+
+.sticky-status-badge.done {
+  background: rgba(163, 177, 155, 0.25);
+  color: #52604D;
+  border-color: rgba(163, 177, 155, 0.5);
+}
+
+.sticky-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #EAE2D7;
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.sticky-priority-input {
+  border: none !important;
+  background: transparent !important;
+  font-size: 12.5px !important;
+  font-weight: 600;
+  color: var(--text-dark);
+  flex-grow: 1;
+  padding: 4px 0 !important;
+  box-shadow: none !important;
+}
+
+.sticky-priority-input.done-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.sticky-save-btn {
+  background: var(--color-accent-hover);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent-dark);
+  border-radius: 6px;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sticky-save-btn:hover {
+  background: var(--color-accent);
+  color: #FFFFFF;
+}
+
+.sticky-done-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-top: 4px;
+}
+
+.sticky-done-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.sticky-checkbox-custom {
+  width: 16px;
+  height: 16px;
+  border: 1.8px solid var(--border-color);
+  border-radius: 4px;
+  background: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.sticky-done-checkbox input[type="checkbox"]:checked + .sticky-checkbox-custom {
+  background: #A3B19B;
+  border-color: #52604D;
+}
+
+.sticky-done-checkbox input[type="checkbox"]:checked + .sticky-checkbox-custom::after {
+  content: '✓';
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: bold;
 }
 

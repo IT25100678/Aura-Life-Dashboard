@@ -248,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initHabitTracker();
   initSettingsProfile();
   initGratitudeJar();
+  initPriorityStickyNote();
   
   // Check if today's entry already exists in stored history
   loadTodayFromState();
@@ -1828,5 +1829,68 @@ function getSeededReflection(dateStr, missedGym, missedWater) {
   } else {
     const q = successQuotes[seed % successQuotes.length];
     return `<strong>Wow, you did great!</strong> ${q}`;
+  }
+}
+
+// 📌 COZY PASTEL STICKY NOTE LOGIC (DAILY PRIORITY)
+// -------------------------------------------------
+function initPriorityStickyNote() {
+  const priorityInput = document.getElementById('priorityInput');
+  const priorityCheck = document.getElementById('priorityCheck');
+  const savePriorityBtn = document.getElementById('savePriorityBtn');
+
+  if (!priorityInput || !priorityCheck) return;
+
+  // Load existing priority for today if available
+  const existingPriority = (todayTracking && todayTracking.priority) || { text: "", isDone: false };
+  priorityInput.value = existingPriority.text || "";
+  priorityCheck.checked = !!existingPriority.isDone;
+  updatePriorityUI(existingPriority.text, existingPriority.isDone);
+
+  const savePriority = () => {
+    const text = priorityInput.value.trim();
+    const isDone = priorityCheck.checked;
+    todayTracking.priority = { text, isDone };
+    
+    // Save to permanent state
+    if (appState.logs[todayTracking.date]) {
+      appState.logs[todayTracking.date].priority = { text, isDone };
+    }
+    saveStateToLocalStorage();
+    updatePriorityUI(text, isDone);
+  };
+
+  if (savePriorityBtn) savePriorityBtn.addEventListener('click', savePriority);
+  priorityInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') savePriority();
+  });
+  priorityCheck.addEventListener('change', savePriority);
+}
+
+function updatePriorityUI(text, isDone) {
+  const priorityInput = document.getElementById('priorityInput');
+  const badge = document.getElementById('priorityStatusBadge');
+  const checkText = document.getElementById('priorityCheckText');
+
+  if (priorityInput) {
+    if (isDone) {
+      priorityInput.classList.add('done-text');
+    } else {
+      priorityInput.classList.remove('done-text');
+    }
+  }
+
+  if (badge) {
+    if (isDone) {
+      badge.textContent = "Done! 🎉";
+      badge.classList.add('done');
+    } else {
+      badge.textContent = text ? "Pinned 📌" : "Pinned";
+      badge.classList.remove('done');
+    }
+  }
+
+  if (checkText) {
+    checkText.textContent = isDone ? "Priority Completed! 🎉" : "Mark Priority as Done ✨";
   }
 }
