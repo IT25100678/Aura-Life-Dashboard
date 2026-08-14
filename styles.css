@@ -1795,12 +1795,12 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
 
 /* 🌱 Daily Focus Bloom (Priority Garden Card) */
 .focus-bloom-card {
-  border-left: 3.5px solid #83C5BE !important;
+  border-left: 3.5px solid var(--color-accent-dark) !important;
 }
 
 .garden-bloom-patch {
-  background: linear-gradient(180deg, rgba(216, 226, 220, 0.4) 0%, rgba(229, 213, 164, 0.3) 100%);
-  border: 1px dashed rgba(131, 197, 190, 0.6);
+  background: linear-gradient(180deg, var(--color-accent-glow) 0%, rgba(229, 213, 164, 0.25) 100%);
+  border: 1.5px dashed var(--color-accent);
   border-radius: 12px;
   padding: 8px 12px;
   min-height: 48px;
@@ -1901,8 +1901,8 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
 }
 
 .spotlight-task-item:hover {
-  border-color: #83C5BE;
-  box-shadow: 0 2px 6px rgba(131, 197, 190, 0.12);
+  border-color: var(--color-accent-dark);
+  box-shadow: 0 2px 6px var(--color-accent-glow);
 }
 
 .spotlight-task-item.completed {
@@ -1912,9 +1912,9 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
 }
 
 .bloom-action-btn {
-  background: rgba(131, 197, 190, 0.2);
-  border: 1px solid rgba(131, 197, 190, 0.6);
-  color: #2B6E66;
+  background: var(--color-accent-glow);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent-dark);
   border-radius: 6px;
   padding: 3px 8px;
   font-size: 10.5px;
@@ -1924,7 +1924,7 @@ body, input, button, select, textarea, span, p, h1, h2, h3, h4, option, label {
 }
 
 .bloom-action-btn:hover {
-  background: #83C5BE;
+  background: var(--color-accent);
   color: #FFFFFF;
 }
 

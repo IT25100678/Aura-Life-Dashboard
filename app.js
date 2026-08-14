@@ -1725,7 +1725,7 @@ function renderPriorityTasks() {
     if (gardenContainer) {
       gardenContainer.innerHTML = `
         <div style="display: flex; align-items: center; gap: 6px; color: var(--text-muted); font-size: 11px; font-weight: 600;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#83C5BE" stroke-width="1.8"><path d="M12 22v-9"/><path d="M12 13a5 5 0 0 1 5-5c0 3-2.5 5-5 5Z"/><path d="M12 13a5 5 0 0 0-5-5c0 3 2.5 5 5 5Z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-dark)" stroke-width="1.8"><path d="M12 22v-9"/><path d="M12 13a5 5 0 0 1 5-5c0 3-2.5 5-5 5Z"/><path d="M12 13a5 5 0 0 0-5-5c0 3 2.5 5 5 5Z"/></svg>
           <span>Garden ready to plant...</span>
         </div>
       `;
@@ -1743,10 +1743,10 @@ function renderPriorityTasks() {
         // Bloomed Flower SVG 🌸
         flowerDiv.innerHTML = `
           <svg width="28" height="28" viewBox="0 0 100 100">
-            <circle cx="50" cy="30" r="12" fill="#FFB5A7"/>
-            <circle cx="70" cy="50" r="12" fill="#FFB5A7"/>
-            <circle cx="50" cy="70" r="12" fill="#FFB5A7"/>
-            <circle cx="30" cy="50" r="12" fill="#FFB5A7"/>
+            <circle cx="50" cy="30" r="12" fill="var(--color-accent)"/>
+            <circle cx="70" cy="50" r="12" fill="var(--color-accent)"/>
+            <circle cx="50" cy="70" r="12" fill="var(--color-accent)"/>
+            <circle cx="30" cy="50" r="12" fill="var(--color-accent)"/>
             <circle cx="50" cy="50" r="10" fill="#FFD166"/>
             <path d="M50,70 L50,95" stroke="#6B7F64" stroke-width="4" stroke-linecap="round"/>
           </svg>
@@ -1756,8 +1756,8 @@ function renderPriorityTasks() {
         flowerDiv.innerHTML = `
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 22v-9" stroke="#6B7F64" stroke-width="2" stroke-linecap="round"/>
-            <path d="M12 13a5 5 0 0 1 5-5c0 3-2.5 5-5 5Z" fill="#83C5BE" stroke="#4A3E3D" stroke-width="1.5"/>
-            <path d="M12 13a5 5 0 0 0-5-5c0 3 2.5 5 5 5Z" fill="#A3B19B" stroke="#4A3E3D" stroke-width="1.5"/>
+            <path d="M12 13a5 5 0 0 1 5-5c0 3-2.5 5-5 5Z" fill="var(--color-accent)" stroke="var(--color-accent-dark)" stroke-width="1.5"/>
+            <path d="M12 13a5 5 0 0 0-5-5c0 3 2.5 5 5 5Z" fill="var(--color-accent-secondary)" stroke="var(--color-accent-dark)" stroke-width="1.5"/>
           </svg>
         `;
       }
