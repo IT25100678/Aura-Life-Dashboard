@@ -1706,9 +1706,11 @@ function initPriorityStickyNote() {
 
 function renderPriorityTasks() {
   const container = document.getElementById('stickyTasksContainer');
+  const gardenContainer = document.getElementById('gardenFlowersContainer');
   if (!container) return;
 
   container.innerHTML = '';
+  if (gardenContainer) gardenContainer.innerHTML = '';
 
   if (!appState.pinnedPriorities) {
     appState.pinnedPriorities = [];
@@ -1717,34 +1719,79 @@ function renderPriorityTasks() {
   const tasks = appState.pinnedPriorities;
 
   if (tasks.length === 0) {
-    container.innerHTML = `<p class="description" style="font-size: 11.5px; margin: 4px 0; text-align: center; color: var(--text-muted);">Your focus spotlight is clear today! Add a task above. 🎯</p>`;
+    container.innerHTML = `<p class="description" style="font-size: 11px; margin: 2px 0; text-align: center; color: var(--text-muted);">Plant your focus priorities to bloom your garden! 🌱</p>`;
+    if (gardenContainer) {
+      gardenContainer.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 6px; color: var(--text-muted); font-size: 11px; font-weight: 600;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#83C5BE" stroke-width="1.8"><path d="M12 22v-9"/><path d="M12 13a5 5 0 0 1 5-5c0 3-2.5 5-5 5Z"/><path d="M12 13a5 5 0 0 0-5-5c0 3 2.5 5 5 5Z"/></svg>
+          <span>Garden ready to plant...</span>
+        </div>
+      `;
+    }
     return;
   }
 
   tasks.forEach(task => {
+    // 1. Render Garden Flower/Sprout SVG
+    if (gardenContainer) {
+      const flowerDiv = document.createElement('div');
+      flowerDiv.className = 'bloom-flower-item';
+
+      if (task.isDone) {
+        // Bloomed Flower SVG 🌸
+        flowerDiv.innerHTML = `
+          <svg width="28" height="28" viewBox="0 0 100 100">
+            <circle cx="50" cy="30" r="12" fill="#FFB5A7"/>
+            <circle cx="70" cy="50" r="12" fill="#FFB5A7"/>
+            <circle cx="50" cy="70" r="12" fill="#FFB5A7"/>
+            <circle cx="30" cy="50" r="12" fill="#FFB5A7"/>
+            <circle cx="50" cy="50" r="10" fill="#FFD166"/>
+            <path d="M50,70 L50,95" stroke="#6B7F64" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        `;
+      } else {
+        // Sprout SVG 🌱
+        flowerDiv.innerHTML = `
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 22v-9" stroke="#6B7F64" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 13a5 5 0 0 1 5-5c0 3-2.5 5-5 5Z" fill="#83C5BE" stroke="#4A3E3D" stroke-width="1.5"/>
+            <path d="M12 13a5 5 0 0 0-5-5c0 3 2.5 5 5 5Z" fill="#A3B19B" stroke="#4A3E3D" stroke-width="1.5"/>
+          </svg>
+        `;
+      }
+      gardenContainer.appendChild(flowerDiv);
+    }
+
+    // 2. Render Priority Task Item
     const item = document.createElement('div');
-    item.className = 'spotlight-task-item';
+    item.className = `spotlight-task-item ${task.isDone ? 'completed' : ''}`;
     item.dataset.id = task.id;
 
     item.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 8px; flex-grow: 1;">
-        <i data-lucide="target" style="width: 14px; height: 14px; color: #E07A5F; flex-shrink: 0;"></i>
-        <span class="spotlight-text">${task.text}</span>
+      <div style="display: flex; align-items: center; gap: 6px; flex-grow: 1;">
+        <span style="font-size: 13px;">${task.isDone ? '🌸' : '🌱'}</span>
+        <span class="bloom-text">${task.text}</span>
       </div>
-      <div style="display: flex; align-items: center; gap: 6px;">
-        <button class="spotlight-done-btn" title="Complete Focus">✓ Done</button>
+      <div style="display: flex; align-items: center; gap: 4px;">
+        <button class="bloom-action-btn" title="Bloom Flower">${task.isDone ? '🌸 Bloomed' : '🌸 Bloom'}</button>
         <button class="spotlight-del-btn" title="Delete Task">&times;</button>
       </div>
     `;
 
-    const doneBtn = item.querySelector('.spotlight-done-btn');
+    const bloomBtn = item.querySelector('.bloom-action-btn');
     const delBtn = item.querySelector('.spotlight-del-btn');
 
-    doneBtn.addEventListener('click', () => {
-      item.classList.add('completed');
-      setTimeout(() => {
-        deletePriorityTask(task.id);
-      }, 400);
+    bloomBtn.addEventListener('click', () => {
+      task.isDone = !task.isDone;
+      saveStateToLocalStorage();
+      if (task.isDone) {
+        item.classList.add('completed');
+        setTimeout(() => {
+          deletePriorityTask(task.id);
+        }, 600);
+      } else {
+        renderPriorityTasks();
+      }
     });
 
     delBtn.addEventListener('click', () => {
@@ -1753,8 +1800,6 @@ function renderPriorityTasks() {
 
     container.appendChild(item);
   });
-
-  if (window.lucide) window.lucide.createIcons();
 }
 
 function deletePriorityTask(id) {

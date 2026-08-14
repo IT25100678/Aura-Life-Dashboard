@@ -15,7 +15,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css?v=34">
+  <link rel="stylesheet" href="styles.css?v=35">
 </head>
 <body>
   <div class="app-container">
@@ -85,26 +85,6 @@
           <!-- Left Column: Daily Inputs -->
           <div class="dashboard-column flex-col-gap">
             
-            <!-- 🎯 Daily Focus Spotlight Card -->
-            <div class="glass-card focus-spotlight-card">
-              <div class="card-header">
-                <i data-lucide="target" class="header-icon" style="color: #E07A5F;"></i>
-                <h2>Daily Focus Spotlight</h2>
-              </div>
-              <div class="card-body flex-col-gap">
-                <div class="spotlight-input-wrapper">
-                  <input type="text" id="priorityInput" placeholder="Add focus priority (e.g. Submit Math Assignment)..." maxlength="50" class="spotlight-priority-input">
-                  <button id="addPriorityBtn" class="spotlight-add-btn" title="Add Focus Task">
-                    <i data-lucide="plus"></i>
-                  </button>
-                </div>
-
-                <div class="spotlight-tasks-list" id="stickyTasksContainer">
-                  <!-- Focus tasks rendered dynamically by JS -->
-                </div>
-              </div>
-            </div>
-
             <!-- Daily Mood & Status Card -->
             <div class="glass-card aura-card-glow" id="statusCard">
               <div class="card-header">
@@ -271,6 +251,33 @@
                 <span>Log Today's Entry</span>
               </button>
             </div> <!-- Closes Save Status Card -->
+
+            <!-- 🌱 Daily Focus Bloom (Priority Garden Card) -->
+            <div class="glass-card focus-bloom-card">
+              <div class="card-header">
+                <i data-lucide="sprout" class="header-icon" style="color: #83C5BE;"></i>
+                <h2>Daily Focus Bloom</h2>
+              </div>
+              <div class="card-body flex-col-gap">
+                <!-- Cozy Garden Bloom Patch -->
+                <div class="garden-bloom-patch">
+                  <div class="garden-flowers-container" id="gardenFlowersContainer">
+                    <!-- Dynamic SVG Sprouts & Flowers -->
+                  </div>
+                </div>
+
+                <div class="spotlight-input-wrapper">
+                  <input type="text" id="priorityInput" placeholder="Plant a priority focus (e.g. Submit Assignment)..." maxlength="45" class="spotlight-priority-input">
+                  <button id="addPriorityBtn" class="spotlight-add-btn" title="Plant Focus Sprout">
+                    <i data-lucide="plus"></i>
+                  </button>
+                </div>
+
+                <div class="spotlight-tasks-list" id="stickyTasksContainer">
+                  <!-- Focus tasks rendered dynamically by JS -->
+                </div>
+              </div>
+            </div>
 
           </div> <!-- Closes Right Column -->
         </div> <!-- Closes Dashboard Grid -->
@@ -480,6 +487,6 @@
     </main>
   </div>
   
-  <script src="app.js?v=34"></script>
+  <script src="app.js?v=35"></script>
 </body>
 </html>
