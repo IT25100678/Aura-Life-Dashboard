@@ -855,12 +855,26 @@ input[type="text"]:focus {
   border-color: var(--color-accent);
 }
 
-/* Warm / Pastel Heatmap Color Scale */
-.heatmap-day.mood-5 { background: var(--accent-mood-5); color: white; }
-.heatmap-day.mood-4 { background: var(--accent-mood-4); color: var(--text-primary); }
-.heatmap-day.mood-3 { background: var(--accent-mood-3); color: var(--text-primary); }
-.heatmap-day.mood-2 { background: var(--accent-mood-2); color: var(--text-primary); }
-.heatmap-day.mood-1 { background: var(--accent-mood-1); color: var(--text-primary); }
+/* 🗓️ Logged Days in Calendar Grid: Dynamically Highlighted in User's Selected Theme Color! */
+.heatmap-day.logged-day-highlight {
+  background: var(--color-accent-dark) !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  border: 1.5px solid var(--color-accent) !important;
+  box-shadow: 0 2px 8px var(--color-accent-glow) !important;
+}
+
+.heatmap-day.logged-day-highlight:hover {
+  transform: scale(1.18);
+  background: var(--color-accent) !important;
+  box-shadow: 0 4px 12px var(--color-accent-glow) !important;
+}
+
+/* Today's Date Block Indicator (e.g. 14th) */
+.heatmap-day.today-day-block {
+  border: 2px solid var(--color-accent-dark) !important;
+  font-weight: 800 !important;
+}
 
 /* Timeline list details */
 .timeline-list {

@@ -880,11 +880,19 @@ function renderHistoryView() {
       
       const dayEl = document.createElement('div');
       dayEl.className = 'heatmap-day';
+      dayEl.dataset.date = dayStr;
       dayEl.textContent = day;
       
-      if (dayLog) {
-        dayEl.className += ` mood-${dayLog.mood}`;
-        dayEl.title = `Day ${day}: Mood Rating ${dayLog.mood}/5`;
+      // Is today's date?
+      if (dayStr === todayTracking.date) {
+        dayEl.classList.add('today-day-block');
+      }
+
+      if (dayLog && dayLog.mood > 0) {
+        dayEl.classList.add(`mood-${dayLog.mood}`);
+        dayEl.classList.add('logged-day-highlight');
+        dayEl.title = `Logged Entry for ${dayStr}: Mood Rating ${dayLog.mood}/5`;
+      }
         
         dayEl.addEventListener('click', () => {
           const detailsPane = accBody.querySelector(`#details-${safeMonthId}`);
