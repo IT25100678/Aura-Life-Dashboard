@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         splash.classList.add('fade-out');
         setTimeout(() => { splash.style.display = 'none'; }, 600);
-      }, 1800);
+      }, 3000);
     }
   }
 
