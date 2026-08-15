@@ -71,8 +71,28 @@ const activityIcons = {
     <path d="M9 18V5l12-2v13" fill="none" stroke="#4A3E3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <circle cx="6" cy="18" r="3" fill="#FFE5D9" stroke="#4A3E3D" stroke-width="2"/>
     <circle cx="18" cy="16" r="3" fill="#FFE5D9" stroke="#4A3E3D" stroke-width="2"/>
+  </svg>`,
+  running: `<svg class="activity-svg-sticker" width="32" height="32" viewBox="0 0 24 24" style="filter: drop-shadow(0 2px 4px rgba(188,170,154,0.35));">
+    <circle cx="15" cy="4" r="2" fill="#FFCAD4" stroke="#4A3E3D" stroke-width="1.5"/>
+    <path d="M12 8l-3 4 2 2-3 5" stroke="#4A3E3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M12 8l4 2 3-2" stroke="#4A3E3D" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M11 14l3 3 4-1" stroke="#E29578" stroke-width="2" stroke-linecap="round" fill="none"/>
   </svg>`
 };
+
+function getSmartActivityIcon(name) {
+  const n = (name || '').toLowerCase().trim();
+  if (n.includes('run') || n.includes('jog') || n.includes('sprint') || n.includes('walk') || n.includes('hike') || n.includes('cardio')) return 'running';
+  if (n.includes('gym') || n.includes('workout') || n.includes('fit') || n.includes('lift') || n.includes('train')) return 'exercise';
+  if (n.includes('read') || n.includes('book') || n.includes('study') || n.includes('learn') || n.includes('code')) return 'learning';
+  if (n.includes('sleep') || n.includes('nap') || n.includes('rest') || n.includes('bed')) return 'sleep';
+  if (n.includes('work') || n.includes('job') || n.includes('office') || n.includes('task')) return 'work';
+  if (n.includes('coffee') || n.includes('tea') || n.includes('drink') || n.includes('cafe')) return 'coffee';
+  if (n.includes('game') || n.includes('play') || n.includes('gaming')) return 'game';
+  if (n.includes('music') || n.includes('song') || n.includes('listen')) return 'music';
+  if (n.includes('cook') || n.includes('eat') || n.includes('dinner') || n.includes('food') || n.includes('love') || n.includes('social')) return 'social';
+  return 'exercise';
+}
 
 // 2. Global State Storage Object
 let appState = {
@@ -363,7 +383,7 @@ function initActivitySliders() {
       appState.activities.push({
         id: newId,
         name: name,
-        icon: 'custom',
+        icon: getSmartActivityIcon(name),
         color: randomColor,
         defaultValue: 0
       });
@@ -399,7 +419,7 @@ function renderActivitiesList() {
   appState.activities.forEach(act => {
     const value = todayTracking.activities[act.id] !== undefined ? todayTracking.activities[act.id] : 0;
     const suffix = act.id === 'exercise' ? ' hr' : ' hrs';
-    const iconSvg = activityIcons[act.id] || defaultCustomIcon;
+    const iconSvg = activityIcons[act.icon] || activityIcons[act.id] || defaultCustomIcon;
 
     const row = document.createElement('div');
     row.className = 'slider-group';
