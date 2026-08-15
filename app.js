@@ -77,7 +77,7 @@ const activityIcons = {
 // 2. Global State Storage Object
 let appState = {
   profile: {
-    username: "Aura Tracker",
+    username: "User",
     focus: "Productivity & Health",
     avatarColor: "clay"
   },
@@ -247,6 +247,20 @@ document.addEventListener("DOMContentLoaded", () => {
   renderHistoryView();
   renderAnalyticsView();
   updateNavUserDisplay();
+
+  // Trigger PWA Splash Screen (For installed standalone app or initial launch)
+  const isStandalonePWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (isStandalonePWA || !sessionStorage.getItem('bloom_splash_shown')) {
+    const splash = document.getElementById('pwaSplashScreen');
+    if (splash) {
+      splash.style.display = 'flex';
+      sessionStorage.setItem('bloom_splash_shown', 'true');
+      setTimeout(() => {
+        splash.classList.add('fade-out');
+        setTimeout(() => { splash.style.display = 'none'; }, 600);
+      }, 1800);
+    }
+  }
 
   // Trigger icons redraw
   lucide.createIcons();
@@ -1558,11 +1572,11 @@ function toggleThemeMode() {
 }
 
 function updateNavUserDisplay() {
-  const user = appState.profile.username;
+  const user = appState.profile.username || "User";
   const initial = user.charAt(0).toUpperCase();
   
   document.getElementById('navUsername').textContent = user;
-  document.getElementById('greeting').textContent = `Hello, ${user}`;
+  document.getElementById('greeting').textContent = (user === "User" || user === "Guest") ? "Hello" : `Hello, ${user}`;
   document.getElementById('navAvatar').textContent = initial;
   document.getElementById('avatarPreview').textContent = initial;
   
@@ -1617,7 +1631,7 @@ function resetData() {
   if (confirm("WARNING: Are you absolutely sure you want to clear your entire Aura history? This cannot be undone.")) {
     localStorage.removeItem('aura_dashboard_state');
     appState = {
-      profile: { username: "Sanidi Abewickrama", focus: "Productivity & Health", avatarColor: "clay" },
+      profile: { username: "User", focus: "Productivity & Health", avatarColor: "clay" },
       habits: [...DEFAULT_HABITS],
       activities: [...DEFAULT_ACTIVITIES],
       logs: {},

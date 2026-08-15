@@ -1,11 +1,11 @@
 {
-  "name": "Aura — Life Dashboard",
-  "short_name": "Aura",
+  "name": "Bloom — Life Dashboard",
+  "short_name": "Bloom",
   "description": "A cozy personal dashboard for tracking daily habits, moods, and routines.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#FAF6F0",
-  "theme_color": "#b56b45",
+  "theme_color": "#52604d",
   "icons": [
     {
       "src": "icon.png",
