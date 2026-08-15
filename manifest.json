@@ -8,7 +8,7 @@
   "theme_color": "#52604d",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "bloom_icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

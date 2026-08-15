@@ -1,5 +1,5 @@
-// Aura Service Worker for PWA Installation
-const CACHE_NAME = 'aura-cache-v1';
+// Bloom Service Worker for PWA Installation
+const CACHE_NAME = 'bloom-cache-v51';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
