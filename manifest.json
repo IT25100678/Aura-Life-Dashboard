@@ -5,7 +5,7 @@
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#FAF6F0",
-  "theme_color": "#52604d",
+  "theme_color": "#FAF6F0",
   "icons": [
     {
       "src": "bloom_icon.png",

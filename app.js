@@ -1550,6 +1550,12 @@ function setThemeMode(mode) {
   root.setAttribute('data-theme', appState.themeMode);
   if (body) body.setAttribute('data-theme', appState.themeMode);
 
+  // Update theme-color meta tag so app window bar blends 100% with background
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  if (themeMeta) {
+    themeMeta.setAttribute('content', appState.themeMode === 'dark' ? '#141210' : '#FAF6F0');
+  }
+
   // Update Settings buttons state
   const lightBtn = document.getElementById('lightModeBtn');
   const darkBtn = document.getElementById('darkModeBtn');
@@ -1576,7 +1582,7 @@ function updateNavUserDisplay() {
   const initial = user.charAt(0).toUpperCase();
   
   document.getElementById('navUsername').textContent = user;
-  document.getElementById('greeting').textContent = (user === "User" || user === "Guest") ? "Hello" : `Hello, ${user}`;
+  document.getElementById('greeting').textContent = (user === "User" || user === "Guest") ? "Welcome to Bloom" : `Welcome to Bloom, ${user}`;
   document.getElementById('navAvatar').textContent = initial;
   document.getElementById('avatarPreview').textContent = initial;
   
