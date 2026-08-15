@@ -14,7 +14,7 @@ const INSPIRATIONAL_QUOTES = [
   "Focus on the step in front of you, not the whole staircase."
 ];
 
-const DEFAULT_HABITS = ["Drink 8 glasses of water", "Daily workout", "Mindful meditation"];
+const DEFAULT_HABITS = ["Drink water (2L+)", "Daily workout", "Mindful meditation"];
 
 const DEFAULT_ACTIVITIES = [
   { id: 'sleep', name: 'Sleep', icon: 'sleep', color: 'var(--color-cyan)', defaultValue: 0 },
