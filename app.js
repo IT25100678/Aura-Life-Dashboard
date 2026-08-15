@@ -480,6 +480,8 @@ function renderHabitsList() {
 
   if (appState.habits && Array.isArray(appState.habits)) {
     appState.habits = appState.habits.filter(h => h && typeof h === 'string' && h.trim() !== "");
+    // Auto-migrate old "Drink 8 glasses of water" -> "Drink water (2L+)"
+    appState.habits = appState.habits.map(h => h === "Drink 8 glasses of water" ? "Drink water (2L+)" : h);
   }
   if (!appState.habits || !Array.isArray(appState.habits) || appState.habits.length === 0) {
     appState.habits = [...DEFAULT_HABITS];
