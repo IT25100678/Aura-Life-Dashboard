@@ -1,5 +1,5 @@
 // Bloom Service Worker for PWA Installation
-const CACHE_NAME = 'bloom-cache-v61';
+const CACHE_NAME = 'bloom-cache-v62';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
