@@ -116,7 +116,20 @@ let todayTracking = {
 };
 
 // 3. Helper Functions & Custom In-App Modal Dialogs
-function showCustomAlert(title, message, icon = '🌸') {
+function getModalIconSvg(iconName) {
+  const icons = {
+    'sparkles': `<i data-lucide="sparkles" style="width: 26px; height: 26px;"></i>`,
+    'trash': `<i data-lucide="trash-2" style="width: 26px; height: 26px; color: #E63946;"></i>`,
+    'check': `<i data-lucide="check-circle" style="width: 26px; height: 26px; color: #2A9D8F;"></i>`,
+    'edit': `<i data-lucide="edit-3" style="width: 26px; height: 26px;"></i>`,
+    'mail': `<i data-lucide="mail" style="width: 26px; height: 26px; color: #E29578;"></i>`,
+    'alert': `<i data-lucide="alert-triangle" style="width: 26px; height: 26px; color: #E76F51;"></i>`,
+    'flower': `<i data-lucide="flower" style="width: 26px; height: 26px; color: #E29578;"></i>`
+  };
+  return icons[iconName] || icons['sparkles'];
+}
+
+function showCustomAlert(title, message, icon = 'sparkles') {
   const overlay = document.getElementById('customModalOverlay');
   const iconBadge = document.getElementById('customModalIcon');
   const titleEl = document.getElementById('customModalTitle');
@@ -128,22 +141,23 @@ function showCustomAlert(title, message, icon = '🌸') {
     return;
   }
 
-  iconBadge.textContent = icon;
+  iconBadge.innerHTML = getModalIconSvg(icon);
   titleEl.textContent = title;
-  msgEl.textContent = message;
+  msgEl.innerHTML = message;
 
   actionsEl.innerHTML = `
-    <button class="btn btn-primary" id="customModalOkBtn" style="min-width: 100px;">OK</button>
+    <button class="btn btn-primary" id="customModalOkBtn" style="min-width: 120px;">OK</button>
   `;
 
   overlay.style.display = 'flex';
+  if (window.lucide) lucide.createIcons();
 
   document.getElementById('customModalOkBtn').onclick = () => {
     overlay.style.display = 'none';
   };
 }
 
-function showCustomConfirm(title, message, onConfirm, icon = '🌸') {
+function showCustomConfirm(title, message, onConfirm, icon = 'trash') {
   const overlay = document.getElementById('customModalOverlay');
   const iconBadge = document.getElementById('customModalIcon');
   const titleEl = document.getElementById('customModalTitle');
@@ -157,9 +171,9 @@ function showCustomConfirm(title, message, onConfirm, icon = '🌸') {
     return;
   }
 
-  iconBadge.textContent = icon;
+  iconBadge.innerHTML = getModalIconSvg(icon);
   titleEl.textContent = title;
-  msgEl.textContent = message;
+  msgEl.innerHTML = message;
 
   actionsEl.innerHTML = `
     <button class="btn btn-secondary" id="customModalCancelBtn">Cancel</button>
@@ -167,6 +181,7 @@ function showCustomConfirm(title, message, onConfirm, icon = '🌸') {
   `;
 
   overlay.style.display = 'flex';
+  if (window.lucide) lucide.createIcons();
 
   document.getElementById('customModalCancelBtn').onclick = () => {
     overlay.style.display = 'none';
@@ -175,6 +190,56 @@ function showCustomConfirm(title, message, onConfirm, icon = '🌸') {
   document.getElementById('customModalConfirmBtn').onclick = () => {
     overlay.style.display = 'none';
     if (typeof onConfirm === 'function') onConfirm();
+  };
+}
+
+function showCustomPrompt(title, message, defaultValue, onConfirm, icon = 'edit') {
+  const overlay = document.getElementById('customModalOverlay');
+  const iconBadge = document.getElementById('customModalIcon');
+  const titleEl = document.getElementById('customModalTitle');
+  const msgEl = document.getElementById('customModalMessage');
+  const actionsEl = document.getElementById('customModalActions');
+
+  if (!overlay) {
+    const val = prompt(message, defaultValue);
+    if (val !== null && typeof onConfirm === 'function') onConfirm(val);
+    return;
+  }
+
+  iconBadge.innerHTML = getModalIconSvg(icon);
+  titleEl.textContent = title;
+  msgEl.innerHTML = `
+    <div style="margin-bottom: 12px;">${message}</div>
+    <input type="text" id="customModalInput" class="custom-modal-input" value="${defaultValue || ''}">
+  `;
+
+  actionsEl.innerHTML = `
+    <button class="btn btn-secondary" id="customModalCancelBtn">Cancel</button>
+    <button class="btn btn-primary" id="customModalConfirmBtn">Save</button>
+  `;
+
+  overlay.style.display = 'flex';
+  if (window.lucide) lucide.createIcons();
+
+  const inputEl = document.getElementById('customModalInput');
+  if (inputEl) {
+    inputEl.focus();
+    inputEl.select();
+    inputEl.onkeypress = (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('customModalConfirmBtn').click();
+      }
+    };
+  }
+
+  document.getElementById('customModalCancelBtn').onclick = () => {
+    overlay.style.display = 'none';
+  };
+
+  document.getElementById('customModalConfirmBtn').onclick = () => {
+    const val = inputEl ? inputEl.value : '';
+    overlay.style.display = 'none';
+    if (typeof onConfirm === 'function') onConfirm(val);
   };
 }
 const moodSVGs = {
@@ -650,34 +715,35 @@ window.deleteHabit = function(habitName) {
 };
 
 window.renameHabit = function(oldName) {
-  const newName = prompt(`Enter a new name for "${oldName}":`, oldName);
-  if (newName && newName.trim() !== "" && newName.trim() !== oldName) {
-    const trimmed = newName.trim();
-    if (appState.habits.includes(trimmed)) {
-      showCustomAlert("Duplicate Habit", "A habit with that name already exists!", '💡');
-      return;
-    }
-    
-    appState.habits = appState.habits.map(h => h === oldName ? trimmed : h);
-    
-    if (todayTracking.habits && todayTracking.habits[oldName] !== undefined) {
-      todayTracking.habits[trimmed] = todayTracking.habits[oldName];
-      delete todayTracking.habits[oldName];
-    }
-    
-    Object.keys(appState.logs).forEach(date => {
-      const log = appState.logs[date];
-      if (log.habits && log.habits[oldName] !== undefined) {
-        log.habits[trimmed] = log.habits[oldName];
-        delete log.habits[oldName];
+  showCustomPrompt("Rename Habit", `Enter a new name for "${oldName}":`, oldName, (newName) => {
+    if (newName && newName.trim() !== "" && newName.trim() !== oldName) {
+      const trimmed = newName.trim();
+      if (appState.habits.includes(trimmed)) {
+        showCustomAlert("Duplicate Habit", "A habit with that name already exists!", 'alert');
+        return;
       }
-    });
-    
-    saveStateToLocalStorage();
-    syncTodayLiveToLogs();
-    renderHabitsList();
-    renderAnalyticsView();
-  }
+      
+      appState.habits = appState.habits.map(h => h === oldName ? trimmed : h);
+      
+      if (todayTracking.habits && todayTracking.habits[oldName] !== undefined) {
+        todayTracking.habits[trimmed] = todayTracking.habits[oldName];
+        delete todayTracking.habits[oldName];
+      }
+      
+      Object.keys(appState.logs).forEach(date => {
+        const log = appState.logs[date];
+        if (log.habits && log.habits[oldName] !== undefined) {
+          log.habits[trimmed] = log.habits[oldName];
+          delete log.habits[oldName];
+        }
+      });
+      
+      saveStateToLocalStorage();
+      syncTodayLiveToLogs();
+      renderHabitsList();
+      renderAnalyticsView();
+    }
+  }, 'edit');
 };
 
 window.deleteActivity = function(actId) {
@@ -1529,10 +1595,11 @@ function initSettingsProfile() {
         });
 
         if (response.ok) {
-          alert("Thank you! Your feedback has been sent directly to Sanidi's inbox.");
+          showCustomAlert("Feedback Sent", "Thank you! Your feedback has been sent directly to Sanidi's inbox.", 'mail');
           msgInput.value = "";
         } else {
           // Fallback if blocked
+          showCustomAlert("Form Submission", "Opening mail app fallback to send your feedback...", 'mail');
           const subject = encodeURIComponent(`Aura Website Feedback from ${sender}`);
           const body = encodeURIComponent(`Hi Sanidi,\n\nHere is feedback regarding your Aura website from ${sender}:\n\n"${msg}"`);
           window.location.href = `mailto:abayawikkrama@gmail.com?subject=${subject}&body=${body}`;
