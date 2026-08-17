@@ -115,7 +115,68 @@ let todayTracking = {
   habits: {} // habitName: true/false
 };
 
-// 3. Helper Functions
+// 3. Helper Functions & Custom In-App Modal Dialogs
+function showCustomAlert(title, message, icon = '🌸') {
+  const overlay = document.getElementById('customModalOverlay');
+  const iconBadge = document.getElementById('customModalIcon');
+  const titleEl = document.getElementById('customModalTitle');
+  const msgEl = document.getElementById('customModalMessage');
+  const actionsEl = document.getElementById('customModalActions');
+
+  if (!overlay) {
+    alert(`${title}: ${message}`);
+    return;
+  }
+
+  iconBadge.textContent = icon;
+  titleEl.textContent = title;
+  msgEl.textContent = message;
+
+  actionsEl.innerHTML = `
+    <button class="btn btn-primary" id="customModalOkBtn" style="min-width: 100px;">OK</button>
+  `;
+
+  overlay.style.display = 'flex';
+
+  document.getElementById('customModalOkBtn').onclick = () => {
+    overlay.style.display = 'none';
+  };
+}
+
+function showCustomConfirm(title, message, onConfirm, icon = '🌸') {
+  const overlay = document.getElementById('customModalOverlay');
+  const iconBadge = document.getElementById('customModalIcon');
+  const titleEl = document.getElementById('customModalTitle');
+  const msgEl = document.getElementById('customModalMessage');
+  const actionsEl = document.getElementById('customModalActions');
+
+  if (!overlay) {
+    if (confirm(`${title}\n${message}`)) {
+      if (typeof onConfirm === 'function') onConfirm();
+    }
+    return;
+  }
+
+  iconBadge.textContent = icon;
+  titleEl.textContent = title;
+  msgEl.textContent = message;
+
+  actionsEl.innerHTML = `
+    <button class="btn btn-secondary" id="customModalCancelBtn">Cancel</button>
+    <button class="btn btn-primary" id="customModalConfirmBtn">Confirm</button>
+  `;
+
+  overlay.style.display = 'flex';
+
+  document.getElementById('customModalCancelBtn').onclick = () => {
+    overlay.style.display = 'none';
+  };
+
+  document.getElementById('customModalConfirmBtn').onclick = () => {
+    overlay.style.display = 'none';
+    if (typeof onConfirm === 'function') onConfirm();
+  };
+}
 const moodSVGs = {
   5: `<svg class="mood-svg-sticker" width="20" height="20" viewBox="0 0 24 24" style="display:inline-block; vertical-align:middle; margin-right:6px; filter: drop-shadow(0 1px 2px rgba(188,170,154,0.25));"><circle cx="12" cy="12" r="10" fill="#FFE5D9" stroke="#4A3E3D" stroke-width="1.8"/><path d="M7.5 10c.5-1 1.5-1 2 0M14.5 10c.5-1 1.5-1 2 0" stroke="#4A3E3D" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M9 14.5a3 3 0 0 0 6 0" fill="#FFB5A7" stroke="#4A3E3D" stroke-width="1.8" stroke-linecap="round"/></svg>`,
   4: `<svg class="mood-svg-sticker" width="20" height="20" viewBox="0 0 24 24" style="display:inline-block; vertical-align:middle; margin-right:6px; filter: drop-shadow(0 1px 2px rgba(188,170,154,0.25));"><circle cx="12" cy="12" r="10" fill="#D8E2DC" stroke="#4A3E3D" stroke-width="1.8"/><path d="M8 11.5c.5.5 1 .5 1.5 0M14.5 11.5c.5.5 1 .5 1.5 0" stroke="#4A3E3D" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M9.5 15.5c1 1 2.5 1 3.5 0" stroke="#4A3E3D" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>`,
@@ -372,7 +433,7 @@ function initActivitySliders() {
       
       const lower = name.toLowerCase();
       if (appState.activities.some(act => act.name.toLowerCase() === lower)) {
-        alert("An activity with that name already exists!");
+        showCustomAlert("Duplicate Activity", "An activity with that name already exists!", '💡');
         return;
       }
 
@@ -571,7 +632,7 @@ function renderHabitsList() {
 }
 
 window.deleteHabit = function(habitName) {
-  if (confirm(`Are you sure you want to delete the habit "${habitName}"?`)) {
+  showCustomConfirm("Delete Habit?", `Are you sure you want to delete "${habitName}"?`, () => {
     appState.habits = appState.habits.filter(h => h !== habitName);
     if (todayTracking.habits) delete todayTracking.habits[habitName];
     
@@ -585,7 +646,7 @@ window.deleteHabit = function(habitName) {
     syncTodayLiveToLogs();
     renderHabitsList();
     renderAnalyticsView();
-  }
+  }, '🌿');
 };
 
 window.renameHabit = function(oldName) {
@@ -593,7 +654,7 @@ window.renameHabit = function(oldName) {
   if (newName && newName.trim() !== "" && newName.trim() !== oldName) {
     const trimmed = newName.trim();
     if (appState.habits.includes(trimmed)) {
-      alert("A habit with that name already exists!");
+      showCustomAlert("Duplicate Habit", "A habit with that name already exists!", '💡');
       return;
     }
     
@@ -623,7 +684,7 @@ window.deleteActivity = function(actId) {
   const act = appState.activities.find(a => a.id === actId);
   if (!act) return;
   
-  if (confirm(`Are you sure you want to delete "${act.name}" from all logs?`)) {
+  showCustomConfirm("Delete Activity?", `Are you sure you want to delete "${act.name}" from all logs?`, () => {
     appState.activities = appState.activities.filter(a => a.id !== actId);
     if (todayTracking.activities) delete todayTracking.activities[actId];
     
@@ -636,8 +697,10 @@ window.deleteActivity = function(actId) {
     saveStateToLocalStorage();
     syncTodayLiveToLogs();
     renderActivitiesList();
+    renderTodayOverviewPreview();
     renderAnalyticsView();
-  }
+    lucide.createIcons();
+  }, '🗑️');
 };
 
 function calculateHabitStreak(habitName) {
@@ -747,7 +810,7 @@ function updateSaveStatusIndicator(isSaved) {
 // Button click logger action
 document.getElementById('logDayBtn').addEventListener('click', () => {
   if (todayTracking.mood === 0) {
-    alert("Please select a mood level to log your today's Aura.");
+    showCustomAlert("Mood Required", "Please select how you are feeling today before logging your entry.", '🌸');
     return;
   }
   
@@ -1422,7 +1485,7 @@ function initSettingsProfile() {
     
     saveStateToLocalStorage();
     updateNavUserDisplay();
-    alert("Profile saved successfully!");
+    showCustomAlert("Profile Saved", "Your profile details have been updated successfully!", '✨');
   });
   
   // Data Portability actions (safe checks)
@@ -1643,12 +1706,12 @@ function importData(event) {
         renderAnalyticsView();
         updateNavUserDisplay();
         
-        alert("Aura history successfully restored from backup!");
+        showCustomAlert("Backup Restored", "Bloom history successfully restored from backup!", '🌸');
       } else {
-        alert("Invalid file format. Please upload a valid Aura backup file.");
+        showCustomAlert("Invalid Backup File", "Invalid file format. Please upload a valid Bloom backup file.", '⚠️');
       }
     } catch(err) {
-      alert("Error parsing backup file. Make sure it is a valid JSON file.");
+      showCustomAlert("File Error", "Error parsing backup file. Make sure it is a valid JSON file.", '⚠️');
     }
   };
   reader.readAsText(file);
@@ -1656,7 +1719,7 @@ function importData(event) {
 
 // Reset data fully
 function resetData() {
-  if (confirm("WARNING: Are you absolutely sure you want to clear your entire Aura history? This cannot be undone.")) {
+  showCustomConfirm("Reset All Data?", "Are you absolutely sure you want to clear your entire Bloom history? This action cannot be undone.", () => {
     localStorage.removeItem('aura_dashboard_state');
     appState = {
       profile: { username: "User", focus: "Productivity & Health", avatarColor: "clay" },
@@ -1698,8 +1761,8 @@ function resetData() {
     renderPriorityTasks();
     updateNavUserDisplay();
     
-    alert("Your request has been successful. Your Aura dashboard data has been reset.");
-  }
+    showCustomAlert("Reset Complete", "Your Bloom dashboard data has been reset successfully.", '✨');
+  }, '⚠️');
 }
 
 function hashCode(str) {

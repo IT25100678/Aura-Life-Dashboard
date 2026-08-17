@@ -21,7 +21,7 @@
   <meta name="theme-color" content="#FAF6F0">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css?v=55">
+  <link rel="stylesheet" href="styles.css?v=61">
 </head>
 <body>
   <!-- PWA Welcome Splash Screen Overlay (Shows when app launches) -->
@@ -62,6 +62,16 @@
       <img src="bloom_icon.png?v=55" alt="Bloom Logo" class="splash-logo-img">
       <h2 class="splash-title">Welcome to Bloom</h2>
       <p class="splash-subtitle">Your cozy daily routine & habit tracker</p>
+  <!-- Custom In-App Modal Overlay (Replaces Browser Alerts/Confirms) -->
+  <div id="customModalOverlay" class="custom-modal-overlay" style="display: none;">
+    <div class="custom-modal-card">
+      <div class="custom-modal-icon-badge" id="customModalIcon">🌸</div>
+      <h3 class="custom-modal-title" id="customModalTitle">Notice</h3>
+      <p class="custom-modal-message" id="customModalMessage">Are you sure?</p>
+      <div class="custom-modal-actions" id="customModalActions">
+        <button class="btn btn-secondary" id="customModalCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="customModalConfirmBtn">Confirm</button>
+      </div>
     </div>
   </div>
 
@@ -546,7 +556,7 @@
     </main>
   </div>
   
-  <script src="app.js?v=60"></script>
+  <script src="app.js?v=61"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
